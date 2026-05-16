@@ -1,0 +1,19 @@
+Launching lib\main.dart on motorola edge 60 fusion in debug mode...
+    Running Gradle task 'assembleDebug'...
+    [Fatal Error] launch_background.xml:1:1: Premature end of file.
+
+    FAILURE: Build failed with an exception.
+
+    * What went wrong:
+    Execution failed for task ':app:parseDebugLocalResources'.
+    > A failure occurred while executing com.android.build.gradle.internal.res.ParseLibraryResourcesTask$ParseResourcesRunnable
+    > Failed to parse XML file 'D:\college\3rd year\2nd term\Mobile\Project\Flutter Version\build\app\intermediates\packaged_res\debug\packageDebugResources\drawable-v21\launch_background.xml'
+
+    * Try:
+    > Run with --stacktrace option to get the stack trace.
+    > Run with --info or --debug option to get more log output.
+    > Run with --scan to get full insights.
+    > Get more help at https://help.gradle.org.
+
+    BUILD FAILED in 2s
+    Error: Gradle task assembleDebug failed with exit code 1
