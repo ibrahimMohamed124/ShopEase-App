@@ -48,13 +48,9 @@ lib/
 ---
 
 # Screens 📱
-<p align="center">
-  <img src="screenshots/home.png" width="250"/>
-  <img src="screenshots/cart.png" width="250"/>
-  <img src="screenshots/checkout.png" width="250"/>
-</p>
+
 ## Home Screen
-![Home Screen](screenshots/home.png)
+![Home Screen](screenshots/home.jpg)
 * Featured products section
 * Category filtering
 * Product grid view
@@ -62,7 +58,7 @@ lib/
 * Cart badge counter
 
 ## Categories Screen
-![Category Screen](screenshots/categories.png)
+![Category Screen](screenshots/categories.jpg)
 * Displays all product categories
 * Product count for each category
 * Navigation to filtered products
@@ -81,8 +77,8 @@ lib/
 * Add-to-cart button
 
 ## Cart Screen
-![Cart Screen](screenshots/cart.png)
-![Cart Screen](screenshots/cart-filled.png)
+![Cart Screen](screenshots/cart.jpg)
+![Cart Screen](screenshots/cart-filled.jpg)
 
 * Quantity controls
 * Remove products
@@ -95,7 +91,7 @@ lib/
 * Redirect to shopping flow
 
 ## Checkout Screen
-![Checkout Screen](screenshots/checkout.png)
+![Checkout Screen](screenshots/checkout.jpg)
 * Shipping information
 * Payment method
 * Order summary
