@@ -48,7 +48,11 @@ lib/
 ---
 
 # Screens 📱
-
+<p align="center">
+  <img src="screenshots/home.png" width="250"/>
+  <img src="screenshots/cart.png" width="250"/>
+  <img src="screenshots/checkout.png" width="250"/>
+</p>
 ## Home Screen
 ![Home Screen](screenshots/home.png)
 * Featured products section
