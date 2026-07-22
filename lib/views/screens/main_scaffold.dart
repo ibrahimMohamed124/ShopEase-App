@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopease_mobile/controllers/cart_controller.dart';
+import 'package:shopease_mobile/core/routes/routes.dart';
 import 'package:shopease_mobile/core/theme/app_theme.dart';
 import 'package:shopease_mobile/views/screens/cart_screen.dart';
 import 'package:shopease_mobile/views/screens/categories_screen.dart';
@@ -33,17 +34,17 @@ class _MainScaffoldState extends State<MainScaffold> {
       HomeScreen(
         onOpenSearch:
             (query) =>
-                Navigator.of(context).pushNamed('/search', arguments: query),
+                Navigator.of(context).pushNamed(AppRoutes.search, arguments: query),
         onOpenCartTab: () => _switchTab(2),
       ),
       const CategoriesScreen(),
       CartScreen(
         onContinueShopping: () => _switchTab(0),
-        onCheckout: () => Navigator.of(context).pushNamed('/checkout'),
+        onCheckout: () => Navigator.of(context).pushNamed(AppRoutes.checkout),
       ),
       ProfileScreen(
-        onOpenLogin: () => Navigator.of(context).pushNamed('/login'),
-        onOpenRegister: () => Navigator.of(context).pushNamed('/register'),
+        onOpenLogin: () => Navigator.of(context).pushNamed(AppRoutes.login),
+        onOpenRegister: () => Navigator.of(context).pushNamed(AppRoutes.register),
       ),
     ];
 

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shopease_mobile/controllers/cart_controller.dart';
 import 'package:shopease_mobile/controllers/search_controller.dart'
     as search_vm;
+import 'package:shopease_mobile/core/routes/routes.dart';
 import 'package:shopease_mobile/core/theme/app_theme.dart';
 import 'package:shopease_mobile/views/widgets/error_state.dart';
 import 'package:shopease_mobile/views/widgets/loading_state.dart';
@@ -172,7 +173,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 inCart: cart.isInCart(product.id),
                                 onOpen:
                                     () => Navigator.of(context).pushNamed(
-                                      '/product',
+                                      AppRoutes.product,
                                       arguments: product.id,
                                     ),
                                 onAddToCart: () => cart.addToCart(product),

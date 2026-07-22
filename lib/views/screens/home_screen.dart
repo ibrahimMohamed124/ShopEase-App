@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shopease_mobile/controllers/auth_controller.dart';
 import 'package:shopease_mobile/controllers/cart_controller.dart';
 import 'package:shopease_mobile/controllers/catalog_controller.dart';
+import 'package:shopease_mobile/core/routes/routes.dart';
 import 'package:shopease_mobile/core/theme/app_theme.dart';
 import 'package:shopease_mobile/models/product.dart';
 import 'package:shopease_mobile/views/widgets/category_chip.dart';
@@ -258,7 +259,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _openProduct(BuildContext context, String productId) {
-    Navigator.of(context).pushNamed('/product', arguments: productId);
+    Navigator.of(context).pushNamed(AppRoutes.product, arguments: productId);
   }
 }
 

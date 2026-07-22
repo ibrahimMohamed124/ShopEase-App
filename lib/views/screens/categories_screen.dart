@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopease_mobile/controllers/cart_controller.dart';
 import 'package:shopease_mobile/controllers/catalog_controller.dart';
+import 'package:shopease_mobile/core/routes/routes.dart';
 import 'package:shopease_mobile/core/theme/app_theme.dart';
 import 'package:shopease_mobile/core/utils/icon_mapper.dart';
 import 'package:shopease_mobile/models/category.dart';
@@ -98,7 +99,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                           onOpen:
                               () => Navigator.of(
                                 context,
-                              ).pushNamed('/product', arguments: product.id),
+                              ).pushNamed(AppRoutes.product, arguments: product.id),
                           onAddToCart: () => cartController.addToCart(product),
                         );
                       }).toList(),

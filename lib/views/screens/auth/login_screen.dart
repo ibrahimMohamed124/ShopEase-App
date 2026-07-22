@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopease_mobile/controllers/auth_controller.dart';
+import 'package:shopease_mobile/core/routes/routes.dart';
 import 'package:shopease_mobile/core/theme/app_theme.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -164,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ? null
                               : () => Navigator.of(
                                 context,
-                              ).pushReplacementNamed('/register'),
+                              ).pushReplacementNamed(AppRoutes.register),
                       child: const Text('Sign up'),
                     ),
                   ],

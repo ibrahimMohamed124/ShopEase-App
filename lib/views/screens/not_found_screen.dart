@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopease_mobile/core/routes/routes.dart';
 import 'package:shopease_mobile/core/theme/app_theme.dart';
 
 class NotFoundScreen extends StatelessWidget {
@@ -38,7 +39,7 @@ class NotFoundScreen extends StatelessWidget {
                 onPressed:
                     () => Navigator.of(
                       context,
-                    ).pushNamedAndRemoveUntil('/', (route) => false),
+                    ).pushNamedAndRemoveUntil(AppRoutes.home, (route) => false),
                 child: const Text('Go Home'),
               ),
             ],
