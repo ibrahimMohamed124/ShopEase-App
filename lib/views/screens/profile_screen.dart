@@ -254,9 +254,7 @@ class ProfileScreen extends StatelessWidget {
                             label: 'Sign Out',
                             labelColor: context.colors.destructive,
                             iconColor: context.colors.destructive,
-                            onTap: () async {
-                              await context.read<AuthCubit>().logout();
-                            },
+                            onTap: () => _confirmSignOut(context),
                           ),
                         ],
                       ),
@@ -270,6 +268,36 @@ class ProfileScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  Future<void> _confirmSignOut(BuildContext context) async {
+    final authCubit = context.read<AuthCubit>();
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: const Text('Sign Out'),
+          content: const Text('Are you sure you want to sign out?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(false),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(true),
+              style: TextButton.styleFrom(
+                foregroundColor: dialogContext.colors.destructive,
+              ),
+              child: const Text('Sign Out'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmed == true) {
+      await authCubit.logout();
+    }
   }
 }
 

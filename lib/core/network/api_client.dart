@@ -142,7 +142,8 @@ Future<T> uploadFile<T>(
       request.headers.set(HttpHeaders.acceptHeader, 'application/json');
 
       final token = await _tokenStorage.readToken();
-      if (token != null && token.isNotEmpty) {
+      final hadToken = token != null && token.isNotEmpty;
+      if (hadToken) {
         request.headers.set(HttpHeaders.authorizationHeader, 'Bearer $token');
       }
 
@@ -163,10 +164,23 @@ Future<T> uploadFile<T>(
       final response = await request.close().timeout(timeout);
       final rawBody = await utf8.decoder.bind(response).join().timeout(timeout);
 
-      // [جديد] — اعتراض الـ401 قبل الـerror handling العادي
+      // [تعديل] — لو الـ401 راجع لطلب أصلاً ماكانش معاه token (يعني اليوزر
+      // مش عامل sign in أو عامل sign out بالفعل)، ده مش "انتهت الجلسة"،
+      // ده مجرد endpoint محتاج تسجيل دخول. من غير الشرط ده، أي كول لـ
+      // endpoint محمي بيحصل تلقائي وقت فتح التطبيق (زي restoreCart/
+      // restoreWishlist/loadOrders في الـDI) كان بيرجع 401 لأي حد لسه
+      // مسجلش دخول، وده كان بيمسح أي user متخزن ويرجّع المستخدم لصفحة
+      // الـlogin بالقوة — حتى لو هو أصلاً مسجل دخول وصح، بس صادف إن ده
+      // أول request بيتبعت قبل ما restoreSession() يخلص.
       if (response.statusCode == HttpStatus.unauthorized &&
           !isRetry &&
           !path.startsWith('/auth/')) {
+        if (!hadToken) {
+          throw const ApiException(
+            statusCode: HttpStatus.unauthorized,
+            message: 'Please sign in to continue.',
+          );
+        }
         final refreshed = await _refreshAccessToken();
         if (refreshed) {
           return _send<T>(
