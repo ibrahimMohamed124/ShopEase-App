@@ -7,6 +7,7 @@ import 'package:shopease_mobile/models/cart_item.dart';
 class LocalStorageService {
   static const String _userStorageKey = '@shopease_user';
   static const String _cartStorageKey = '@shopease_cart';
+  static const String _onboardingSeenKey = '@shopease_onboarding_seen';
 
   Future<void> saveUser(AppUser user) async {
     final prefs = await SharedPreferences.getInstance();
@@ -14,13 +15,24 @@ class LocalStorageService {
   }
 
   Future<AppUser?> getUser() async {
-    final prefs = await SharedPreferences.getInstance();
-    final rawUser = prefs.getString(_userStorageKey);
-    if (rawUser == null || rawUser.isEmpty) {
+  final prefs = await SharedPreferences.getInstance();
+  final rawUser = prefs.getString(_userStorageKey);
+  if (rawUser == null || rawUser.isEmpty) {
+    return null;
+  }
+
+  try {
+    final decoded = jsonDecode(rawUser);
+    if (decoded is! Map<String, dynamic>) {
+      await prefs.remove(_userStorageKey);
       return null;
     }
-    return AppUser.fromJson(jsonDecode(rawUser) as Map<String, dynamic>);
+    return AppUser.fromJson(decoded);
+  } catch (_) {
+    await prefs.remove(_userStorageKey);
+    return null;
   }
+}
 
   Future<void> clearUser() async {
     final prefs = await SharedPreferences.getInstance();
@@ -49,5 +61,15 @@ class LocalStorageService {
   Future<void> clearCart() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_cartStorageKey);
+  }
+
+  Future<bool> getOnboardingSeen() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_onboardingSeenKey) ?? false;
+  }
+
+  Future<void> setOnboardingSeen() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_onboardingSeenKey, true);
   }
 }

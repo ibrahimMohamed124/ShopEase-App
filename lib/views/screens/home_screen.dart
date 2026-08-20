@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shopease_mobile/controllers/auth_controller.dart';
-import 'package:shopease_mobile/controllers/cart_controller.dart';
-import 'package:shopease_mobile/controllers/catalog_controller.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopease_mobile/cubits/auth/auth_cubit.dart';
+import 'package:shopease_mobile/cubits/cart/cart_cubit.dart';
+import 'package:shopease_mobile/cubits/catalog/catalog_cubit.dart';
 import 'package:shopease_mobile/core/routes/routes.dart';
 import 'package:shopease_mobile/core/theme/app_theme.dart';
 import 'package:shopease_mobile/models/product.dart';
@@ -30,239 +30,448 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authController = context.watch<AuthController>();
-    final catalogController = context.watch<CatalogController>();
-    final cartController = context.watch<CartController>();
-    final rawName = authController.user?.name.trim() ?? '';
-    final userName = rawName.isEmpty ? 'Shopper' : rawName.split(' ').first;
-    final width = MediaQuery.of(context).size.width;
-    final cardWidth = (width - 48) / 2;
+    return BlocBuilder<CatalogCubit, CatalogState>(
+      builder: (context, catalogState) {
+        return BlocBuilder<CartCubit, CartState>(
+          builder: (context, cartState) {
+            return BlocBuilder<AuthCubit, AuthState>(
+              builder: (context, authState) {
+                final rawName = authState.user?.name.trim() ?? '';
+                final userName =
+                    rawName.isEmpty ? 'Shopper' : rawName.split(' ').first;
+                final width = MediaQuery.of(context).size.width;
+                final cardWidth = (width - 48) / 2;
 
-    if (catalogController.isLoading && catalogController.products.isEmpty) {
-      return const LoadingState(message: 'Loading products...');
-    }
+                if (catalogState.isLoading && catalogState.products.isEmpty) {
+                  return const LoadingState(message: 'Loading products...');
+                }
 
-    if (catalogController.error != null && catalogController.products.isEmpty) {
-      return ErrorState(
-        message: catalogController.error!,
-        onRetry: catalogController.loadInitial,
-      );
-    }
+                if (catalogState.error != null &&
+                    catalogState.products.isEmpty) {
+                  return ErrorState(
+                    message: catalogState.error!,
+                    onRetry: () =>
+                        context.read<CatalogCubit>().loadInitial(),
+                  );
+                }
 
-    return RefreshIndicator(
-      color: AppPalette.primary,
-      onRefresh: () => catalogController.loadInitial(isRefresh: true),
-      child: ListView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 28),
+                return RefreshIndicator(
+                  color: AppPalette.primary,
+                  onRefresh: () => context
+                      .read<CatalogCubit>()
+                      .loadInitial(isRefresh: true),
+                  child: ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    children: [
+                      _HomeHeader(
+                        userName: userName,
+                        cartCount: cartState.totalItems,
+                        onOpenCart: widget.onOpenCartTab,
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                        child: Transform.translate(
+                          offset: const Offset(0, -22),
+                          child: _SearchBar(
+                            query: _searchQuery,
+                            onChanged: (value) {
+                              setState(() => _searchQuery = value);
+                              context
+                                  .read<CatalogCubit>()
+                                  .setSearchQuery(value);
+                            },
+                            onSubmitted: (value) {
+                              if (value.trim().isNotEmpty) {
+                                widget.onOpenSearch(value.trim());
+                              }
+                            },
+                            onClear: () {
+                              setState(() => _searchQuery = '');
+                              context
+                                  .read<CatalogCubit>()
+                                  .setSearchQuery('');
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(16, 0, 16, 28),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (_searchQuery.trim().isEmpty) ...[
+                              const Text(
+                                'Featured',
+                                style: TextStyle(
+                                  color: AppPalette.foreground,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              SizedBox(
+                                height: 170,
+                                child: ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount:
+                                      catalogState.featuredProducts.length,
+                                  separatorBuilder: (_, __) =>
+                                      const SizedBox(width: 12),
+                                  itemBuilder: (context, index) {
+                                    final product =
+                                        catalogState.featuredProducts[index];
+                                    return _FeaturedCard(
+                                      product: product,
+                                      onTap: () => Navigator.of(context)
+                                          .pushNamed(AppRoutes.product,
+                                              arguments: product.id),
+                                    );
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 24),
+
+                              // Categories row
+                              if (catalogState.categories.isNotEmpty) ...[
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text(
+                                      'Shop by Category',
+                                      style: TextStyle(
+                                        color: AppPalette.foreground,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                SizedBox(
+                                  height: 38,
+                                  child: ListView.separated(
+                                    scrollDirection: Axis.horizontal,
+                                    // [جديد] +1 عشان "All" chip في الأول
+                                    itemCount:
+                                        catalogState.categories.length + 1,
+                                    separatorBuilder: (_, __) =>
+                                        const SizedBox(width: 8),
+                                    itemBuilder: (context, index) {
+                                      // [جديد] أول عنصر بيبقى "All" —
+                                      // بيرجّع selectedCategoryId لـnull
+                                      // عشان يمسح الفلتر ويعرض كل المنتجات
+                                      if (index == 0) {
+                                        return _AllCategoryChip(
+                                          selected: catalogState
+                                                  .selectedCategoryId ==
+                                              null,
+                                          onTap: () => context
+                                              .read<CatalogCubit>()
+                                              .setSelectedCategory(null),
+                                        );
+                                      }
+                                      final cat = catalogState
+                                          .categories[index - 1];
+                                      return CategoryChip(
+                                        category: cat,
+                                        selected:
+                                            catalogState.selectedCategoryId ==
+                                                cat.id,
+                                        onTap: () =>
+                                            context
+                                                .read<CatalogCubit>()
+                                                .setSelectedCategory(
+                                                  catalogState
+                                                              .selectedCategoryId ==
+                                                          cat.id
+                                                      ? null
+                                                      : cat.id,
+                                                ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                              ],
+
+                              const Text(
+                                'All Products',
+                                style: TextStyle(
+                                  color: AppPalette.foreground,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                            ],
+
+                            // Products grid
+                            Wrap(
+                              spacing: 16,
+                              runSpacing: 16,
+                              children: catalogState.filteredProducts
+                                  .map((product) => ProductCard(
+                                        product: product,
+                                        width: cardWidth,
+                                        inCart:
+                                            cartState.isInCart(product.id),
+                                        onOpen: () =>
+                                            Navigator.of(context).pushNamed(
+                                          AppRoutes.product,
+                                          arguments: product.id,
+                                        ),
+                                        onAddToCart: () => context
+                                            .read<CartCubit>()
+                                            .addToCart(product),
+                                      ))
+                                  .toList(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+// ─── Sub-widgets ─────────────────────────────────────────────────────────────
+
+class _HomeHeader extends StatelessWidget {
+  const _HomeHeader({
+    required this.userName,
+    required this.cartCount,
+    required this.onOpenCart,
+  });
+
+  final String userName;
+  final int cartCount;
+  final VoidCallback onOpenCart;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        bottomLeft: Radius.circular(36),
+        bottomRight: Radius.circular(36),
+      ),
+      child: Container(
+      height: 180,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [AppPalette.primary, AppPalette.secondary],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+      padding: const EdgeInsets.fromLTRB(20, 56, 20, 36),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Hello, $userName!',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                const Text(
+                  'What are you looking for today?',
+                  style: TextStyle(color: Colors.white70, fontSize: 13),
+                ),
+              ],
+            ),
+          ),
+          Stack(
+            clipBehavior: Clip.none,
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Welcome back,',
-                      style: TextStyle(
-                        color: AppPalette.mutedForeground,
-                        fontSize: 14,
-                      ),
+              IconButton(
+                onPressed: onOpenCart,
+                icon: const Icon(Icons.shopping_cart_outlined,
+                    color: Colors.white, size: 26),
+              ),
+              if (cartCount > 0)
+                Positioned(
+                  right: 4,
+                  top: 4,
+                  child: Container(
+                    width: 18,
+                    height: 18,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.15),
+                          blurRadius: 4,
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '$userName 👋',
+                    child: Text(
+                      cartCount > 9 ? '9+' : '$cartCount',
                       style: const TextStyle(
-                        color: AppPalette.foreground,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 24,
+                        color: AppPalette.primary,
+                        fontSize: 9,
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
-                    const SizedBox(height: 6),
-                    const Text(
-                      'Find your perfect item',
-                      style: TextStyle(
-                        color: AppPalette.foreground,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-              TextButton.icon(
-                style: TextButton.styleFrom(
-                  foregroundColor: AppPalette.primary,
-                  backgroundColor: const Color(0xFFFFF0F0),
-                ),
-                onPressed: widget.onOpenCartTab,
-                icon: const Icon(Icons.shopping_cart_outlined, size: 18),
-                label: Text(
-                  cartController.totalItems > 0
-                      ? '${cartController.totalItems} item(s)'
-                      : 'Cart',
-                ),
-              ),
             ],
           ),
-          const SizedBox(height: 16),
-          TextField(
-            onChanged: (value) {
-              setState(() {
-                _searchQuery = value;
-              });
-              catalogController.setSearchQuery(value);
-            },
-            onSubmitted: (value) {
-              if (value.trim().isNotEmpty) {
-                widget.onOpenSearch(value.trim());
-              }
-            },
-            decoration: InputDecoration(
-              hintText: 'Search products...',
-              prefixIcon: const Icon(Icons.search_rounded),
-              suffixIcon:
-                  _searchQuery.trim().isEmpty
-                      ? null
-                      : IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _searchQuery = '';
-                          });
-                          catalogController.setSearchQuery('');
-                        },
-                        icon: const Icon(Icons.close_rounded),
-                      ),
-            ),
+        ],
+      ),
+    ),   // Container
+    );   // ClipRRect
+  }
+}
+
+class _SearchBar extends StatelessWidget {
+  const _SearchBar({
+    required this.query,
+    required this.onChanged,
+    required this.onSubmitted,
+    required this.onClear,
+  });
+
+  final String query;
+  final ValueChanged<String> onChanged;
+  final ValueChanged<String> onSubmitted;
+  final VoidCallback onClear;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 4,
+      borderRadius: BorderRadius.circular(14),
+      shadowColor: Colors.black12,
+      child: TextField(
+        onChanged: onChanged,
+        onSubmitted: onSubmitted,
+        decoration: InputDecoration(
+          hintText: 'Search products...',
+          prefixIcon: const Icon(Icons.search_rounded),
+          suffixIcon: query.isNotEmpty
+              ? IconButton(
+                  onPressed: onClear,
+                  icon: const Icon(Icons.close_rounded),
+                )
+              : null,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(14),
+            borderSide: BorderSide.none,
           ),
-          if (_searchQuery.trim().isEmpty) ...[
-            const SizedBox(height: 20),
-            const Text(
-              'Featured',
-              style: TextStyle(
-                color: AppPalette.foreground,
-                fontWeight: FontWeight.w700,
-                fontSize: 18,
-              ),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
+          filled: true,
+          fillColor: AppPalette.card,
+          contentPadding: const EdgeInsets.symmetric(vertical: 0),
+        ),
+      ),
+    );
+  }
+}
+
+class _FeaturedCard extends StatelessWidget {
+  const _FeaturedCard({required this.product, required this.onTap});
+
+  final Product product;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Stack(
+          children: [
+            Image.network(
+              product.imageUrl,
+              width: 200,
               height: 170,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: catalogController.featuredProducts.length,
-                separatorBuilder: (_, __) => const SizedBox(width: 12),
-                itemBuilder: (context, index) {
-                  final product = catalogController.featuredProducts[index];
-                  return _FeaturedCard(
-                    product: product,
-                    onTap: () => _openProduct(context, product.id),
-                  );
-                },
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => Container(
+                width: 200,
+                height: 170,
+                color: AppPalette.muted,
               ),
             ),
-            const SizedBox(height: 14),
-            const Text(
-              'Categories',
-              style: TextStyle(
-                color: AppPalette.foreground,
-                fontWeight: FontWeight.w700,
-                fontSize: 18,
+            Container(
+              width: 200,
+              height: 170,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.transparent, Color(0xC0000000)],
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 42,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  _AllCategoryChip(
-                    selected: catalogController.selectedCategoryId == null,
-                    onTap: () => catalogController.setSelectedCategory(null),
-                  ),
-                  const SizedBox(width: 8),
-                  ...catalogController.categories.map(
-                    (category) => Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: CategoryChip(
-                        category: category,
-                        selected:
-                            catalogController.selectedCategoryId == category.id,
-                        onTap:
-                            () => catalogController.setSelectedCategory(
-                              catalogController.selectedCategoryId ==
-                                      category.id
-                                  ? null
-                                  : category.id,
-                            ),
+                  if (product.badge != null)
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 6),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: AppPalette.primary,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        product.badge!,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
+                  Text(
+                    product.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                    ),
+                  ),
+                  Text(
+                    '\$${product.price.toStringAsFixed(2)}',
+                    style:
+                        const TextStyle(color: Colors.white, fontSize: 13),
                   ),
                 ],
               ),
             ),
           ],
-          const SizedBox(height: 18),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                _searchQuery.trim().isNotEmpty
-                    ? 'Results for "$_searchQuery"'
-                    : catalogController.selectedCategoryId != null
-                    ? 'Filtered Products'
-                    : 'All Products',
-                style: const TextStyle(
-                  color: AppPalette.foreground,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18,
-                ),
-              ),
-              Text(
-                '${catalogController.filteredProducts.length} items',
-                style: const TextStyle(
-                  color: AppPalette.mutedForeground,
-                  fontSize: 13,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          if (catalogController.filteredProducts.isEmpty)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 40),
-              child: Center(
-                child: Text(
-                  'No products found. Try adjusting your filters.',
-                  style: TextStyle(color: AppPalette.mutedForeground),
-                ),
-              ),
-            )
-          else
-            Wrap(
-              spacing: 12,
-              runSpacing: 12,
-              children:
-                  catalogController.filteredProducts.map((product) {
-                    return ProductCard(
-                      product: product,
-                      width: cardWidth,
-                      inCart: cartController.isInCart(product.id),
-                      onOpen: () => _openProduct(context, product.id),
-                      onAddToCart: () => cartController.addToCart(product),
-                    );
-                  }).toList(),
-            ),
-        ],
+        ),
       ),
     );
   }
-
-  void _openProduct(BuildContext context, String productId) {
-    Navigator.of(context).pushNamed(AppRoutes.product, arguments: productId);
-  }
 }
 
+// [جديد] — نفس شكل CategoryChip بالظبط، لكن ثابت ("All") بدل ما يتبني من
+// Category؛ بيمسح selectedCategoryId عشان يرجّع عرض كل المنتجات تاني
 class _AllCategoryChip extends StatelessWidget {
   const _AllCategoryChip({required this.selected, required this.onTap});
 
@@ -283,90 +492,24 @@ class _AllCategoryChip extends StatelessWidget {
             color: selected ? AppPalette.primary : AppPalette.border,
           ),
         ),
-        child: Text(
-          'All',
-          style: TextStyle(
-            color: selected ? Colors.white : AppPalette.foreground,
-            fontWeight: FontWeight.w500,
-            fontSize: 13,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _FeaturedCard extends StatelessWidget {
-  const _FeaturedCard({required this.product, required this.onTap});
-
-  final Product product;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
-      child: Ink(
-        width: 220,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          image: DecorationImage(
-            image: NetworkImage(product.imageUrl),
-            fit: BoxFit.cover,
-            onError: (_, __) {},
-          ),
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            gradient: const LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Colors.transparent, Color(0xC0000000)],
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.apps_rounded,
+              size: 15,
+              color: selected ? Colors.white : AppPalette.primary,
             ),
-          ),
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              if (product.badge != null)
-                Container(
-                  margin: const EdgeInsets.only(bottom: 6),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 3,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppPalette.primary,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    product.badge!,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              Text(
-                product.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                ),
+            const SizedBox(width: 6),
+            Text(
+              'All',
+              style: TextStyle(
+                color: selected ? Colors.white : AppPalette.foreground,
+                fontWeight: FontWeight.w500,
+                fontSize: 13,
               ),
-              Text(
-                '\$${product.price.toStringAsFixed(2)}',
-                style: const TextStyle(color: Colors.white, fontSize: 13),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

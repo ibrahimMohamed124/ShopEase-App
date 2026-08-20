@@ -1,8 +1,9 @@
 import 'package:shopease_mobile/models/app_user.dart';
 import 'package:shopease_mobile/models/category.dart';
 import 'package:shopease_mobile/models/product.dart';
+import 'package:shopease_mobile/services/app_data_service.dart';
 
-class MockDataService {
+class MockDataService implements AppDataService {
   static const List<Product> _products = [
     Product(
       id: '1',
@@ -182,6 +183,16 @@ class MockDataService {
       icon: 'cpu',
       colorHex: '#6C63FF',
       productCount: 4,
+      imageUrl:
+          'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=600&q=80',
+      subcategories: [
+        'All',
+        'Phones',
+        'Laptops',
+        'Tablets',
+        'Headphones',
+        'Cameras',
+      ],
     ),
     Category(
       id: 'fashion',
@@ -189,6 +200,16 @@ class MockDataService {
       icon: 'shopping-bag',
       colorHex: '#FF6B6B',
       productCount: 2,
+      imageUrl:
+          'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=600&q=80',
+      subcategories: [
+        'All',
+        "Men's",
+        "Women's",
+        'Kids',
+        'Shoes',
+        'T-Shirts',
+      ],
     ),
     Category(
       id: 'accessories',
@@ -196,6 +217,16 @@ class MockDataService {
       icon: 'watch',
       colorHex: '#FFB800',
       productCount: 2,
+      imageUrl:
+          'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80',
+      subcategories: [
+        'All',
+        'Watches',
+        'Bags',
+        'Jewelry',
+        'Sunglasses',
+        'Belts',
+      ],
     ),
     Category(
       id: 'sports',
@@ -203,18 +234,39 @@ class MockDataService {
       icon: 'activity',
       colorHex: '#22C55E',
       productCount: 3,
+      imageUrl:
+          'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80',
+      subcategories: [
+        'All',
+        'Running',
+        'Gym',
+        'Yoga',
+        'Cycling',
+        'Outdoor',
+      ],
     ),
     Category(
       id: 'home',
-      name: 'Home',
+      name: 'Home & Living',
       icon: 'home',
       colorHex: '#06B6D4',
       productCount: 1,
+      imageUrl:
+          'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80',
+      subcategories: [
+        'All',
+        'Furniture',
+        'Kitchen',
+        'Decor',
+        'Lighting',
+        'Bedding',
+      ],
     ),
   ];
 
   List<Product> get productsData => List.unmodifiable(_products);
 
+  @override
   Future<List<Product>> fetchProducts({
     String? category,
     String? search,
@@ -243,6 +295,7 @@ class MockDataService {
     return results;
   }
 
+  @override
   Future<Product?> fetchProductById(String id) async {
     await Future<void>.delayed(const Duration(milliseconds: 250));
     try {
@@ -252,16 +305,19 @@ class MockDataService {
     }
   }
 
+  @override
   Future<List<Product>> fetchFeaturedProducts() async {
     await Future<void>.delayed(const Duration(milliseconds: 300));
     return _products.where((product) => product.badge != null).take(6).toList();
   }
 
+  @override
   Future<List<Category>> fetchCategories() async {
     await Future<void>.delayed(const Duration(milliseconds: 250));
     return List<Category>.from(_categories);
   }
 
+  @override
   Future<AppUser> loginUser(String email, String password) async {
     await Future<void>.delayed(const Duration(milliseconds: 500));
     if (email.trim().isEmpty || password.trim().isEmpty) {
@@ -289,6 +345,7 @@ class MockDataService {
     );
   }
 
+  @override
   Future<AppUser> registerUser(
     String name,
     String email,

@@ -1,86 +1,29 @@
-import 'dart:async';
-
-import 'package:flutter/foundation.dart';
 import 'package:shopease_mobile/models/cart_item.dart';
 import 'package:shopease_mobile/models/product.dart';
-import 'package:shopease_mobile/services/local_storage_service.dart';
+import 'package:shopease_mobile/repositories/cart_repository.dart';
 
-class CartController extends ChangeNotifier {
-  CartController({required this.storageService});
+class CartController {
+  CartController({required CartRepository cartRepository})
+      : _cartRepository = cartRepository;
 
-  final LocalStorageService storageService;
+  final CartRepository _cartRepository;
 
-  List<CartItem> _items = <CartItem>[];
-  bool _isLoading = true;
+  Future<List<CartItem>> loadCart() => _cartRepository.loadCart();
 
-  List<CartItem> get items => List<CartItem>.unmodifiable(_items);
-  bool get isLoading => _isLoading;
+  Future<List<CartItem>> addToCart(List<CartItem> current, Product product) =>
+      _cartRepository.addToCart(current, product);
 
-  int get totalItems => _items.fold<int>(0, (sum, item) => sum + item.quantity);
-  double get totalPrice => _items.fold<double>(
-    0,
-    (sum, item) => sum + item.product.price * item.quantity,
-  );
+  Future<List<CartItem>> removeFromCart(List<CartItem> current, String productId) =>
+      _cartRepository.removeFromCart(current, productId);
 
-  Future<void> restoreCart() async {
-    _isLoading = true;
-    notifyListeners();
-    try {
-      _items = await storageService.getCart();
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
-  }
+  Future<List<CartItem>> incrementQuantity(List<CartItem> current, String productId) =>
+      _cartRepository.incrementQuantity(current, productId);
 
-  bool isInCart(String productId) {
-    return _items.any((item) => item.product.id == productId);
-  }
+  Future<List<CartItem>> decrementQuantity(List<CartItem> current, String productId) =>
+      _cartRepository.decrementQuantity(current, productId);
 
-  void addToCart(Product product) {
-    final existingIndex = _items.indexWhere(
-      (item) => item.product.id == product.id,
-    );
-    if (existingIndex >= 0) {
-      final existing = _items[existingIndex];
-      _items[existingIndex] = existing.copyWith(
-        quantity: existing.quantity + 1,
-      );
-    } else {
-      _items = <CartItem>[..._items, CartItem(product: product, quantity: 1)];
-    }
-    _persist();
-    notifyListeners();
-  }
+  Future<List<CartItem>> updateQuantity(List<CartItem> current, String productId, int quantity) =>
+      _cartRepository.updateQuantity(current, productId, quantity);
 
-  void removeFromCart(String productId) {
-    _items = _items.where((item) => item.product.id != productId).toList();
-    _persist();
-    notifyListeners();
-  }
-
-  void updateQuantity(String productId, int quantity) {
-    if (quantity <= 0) {
-      removeFromCart(productId);
-      return;
-    }
-
-    _items =
-        _items.map((item) {
-          if (item.product.id != productId) return item;
-          return item.copyWith(quantity: quantity);
-        }).toList();
-    _persist();
-    notifyListeners();
-  }
-
-  void clearCart() {
-    _items = <CartItem>[];
-    unawaited(storageService.clearCart());
-    notifyListeners();
-  }
-
-  void _persist() {
-    unawaited(storageService.saveCart(_items));
-  }
+  Future<List<CartItem>> clearCart() => _cartRepository.clearCart();
 }

@@ -143,6 +143,42 @@ Only widgets wrapped with `Consumer` are rebuilt when state changes occur, impro
 
 ---
 
+# Data Source Switching
+
+The app has one central data-source switch in `lib/core/config/app_config.dart`.
+
+```dart
+static const bool API_DEPENDABLE = bool.fromEnvironment(
+  'API_DEPENDABLE',
+  defaultValue: false,
+);
+```
+
+Run with mock data:
+
+```bash
+flutter run
+```
+
+Run against the API:
+
+```bash
+flutter run --dart-define=API_DEPENDABLE=true --dart-define=API_BASE_URL=https://your-api-domain.com
+```
+
+The remote service expects these endpoints by default:
+
+```text
+GET  /products
+GET  /products/{id}
+GET  /products/featured
+GET  /categories
+POST /auth/login
+POST /auth/register
+```
+
+---
+
 # Challenges & Solutions 🚀
 
 ## 1. Application Structure

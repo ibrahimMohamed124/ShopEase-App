@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:shopease_mobile/models/product.dart';
-import 'package:shopease_mobile/services/mock_data_service.dart';
+import 'package:shopease_mobile/services/app_data_service.dart';
 
 enum SearchSort { featured, priceAsc, priceDesc, rating }
 
@@ -11,7 +11,7 @@ enum SearchRatingFilter { any, from4, from45 }
 class SearchController extends ChangeNotifier {
   SearchController({required this.dataService});
 
-  final MockDataService dataService;
+  final AppDataService dataService;
 
   bool _isLoading = false;
   String? _error;

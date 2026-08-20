@@ -14,7 +14,7 @@ class SearchField extends StatelessWidget {
   final ValueChanged<String> onChanged;
   final ValueChanged<String>? onSubmitted;
   final String hint;
-
+  
   @override
   Widget build(BuildContext context) {
     return TextField(

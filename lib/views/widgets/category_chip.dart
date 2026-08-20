@@ -34,7 +34,7 @@ class CategoryChip extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              mapCategoryIcon(category.icon),
+              IconMapper.forCategory(category.icon),
               size: 15,
               color: selected ? Colors.white : categoryColor,
             ),
@@ -55,6 +55,8 @@ class CategoryChip extends StatelessWidget {
 
   Color _colorFromHex(String hex) {
     final raw = hex.replaceFirst('#', '');
-    return Color(int.parse('FF$raw', radix: 16));
+    final normalized = raw.length == 6 ? 'FF$raw' : raw;
+    final value = int.tryParse(normalized, radix: 16);
+    return value == null ? AppPalette.secondary : Color(value);
   }
 }
