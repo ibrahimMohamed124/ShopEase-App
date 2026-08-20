@@ -69,10 +69,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             width: 72,
             height: 72,
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
+              gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [AppPalette.primary, AppPalette.secondary],
+                colors: [context.colors.primary, context.colors.secondary],
               ),
               borderRadius: BorderRadius.circular(20),
             ),
@@ -84,19 +84,19 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             ),
           ),
           const SizedBox(height: 14),
-          const Text(
+          Text(
             'Reset Password',
             style: TextStyle(
-              color: AppPalette.foreground,
+              color: context.colors.foreground,
               fontSize: 26,
               fontWeight: FontWeight.w700,
             ),
           ),
           const SizedBox(height: 6),
-          const Text(
+          Text(
             'Enter your email and we\'ll send you\na reset link.',
             textAlign: TextAlign.center,
-            style: TextStyle(color: AppPalette.mutedForeground),
+            style: TextStyle(color: context.colors.mutedForeground),
           ),
           const SizedBox(height: 20),
 
@@ -105,13 +105,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               width: double.infinity,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppPalette.destructive.withOpacity(0.1),
+                color: context.colors.destructive.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: AppPalette.destructive.withOpacity(0.3)),
+                border: Border.all(color: context.colors.destructive.withOpacity(0.3)),
               ),
               child: Text(
                 _error!,
-                style: const TextStyle(color: AppPalette.destructive, fontSize: 13),
+                style: TextStyle(color: context.colors.destructive, fontSize: 13),
               ),
             ),
             const SizedBox(height: 16),
@@ -163,21 +163,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           width: 80,
           height: 80,
           decoration: BoxDecoration(
-            color: AppPalette.success.withOpacity(0.12),
+            color: context.colors.success.withOpacity(0.12),
             shape: BoxShape.circle,
           ),
           alignment: Alignment.center,
-          child: const Icon(
+          child: Icon(
             Icons.mark_email_read_rounded,
-            color: AppPalette.success,
+            color: context.colors.success,
             size: 40,
           ),
         ),
         const SizedBox(height: 20),
-        const Text(
+        Text(
           'Check Your Email',
           style: TextStyle(
-            color: AppPalette.foreground,
+            color: context.colors.foreground,
             fontSize: 24,
             fontWeight: FontWeight.w700,
           ),
@@ -186,23 +186,23 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         Text(
           'We sent a password reset link to\n${_emailController.text.trim()}',
           textAlign: TextAlign.center,
-          style: const TextStyle(color: AppPalette.mutedForeground, height: 1.5),
+          style: TextStyle(color: context.colors.mutedForeground, height: 1.5),
         ),
         const SizedBox(height: 32),
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppPalette.muted,
+            color: context.colors.muted,
             borderRadius: BorderRadius.circular(14),
           ),
-          child: const Row(
+          child: Row(
             children: [
-              Icon(Icons.info_outline_rounded, color: AppPalette.mutedForeground, size: 18),
+              Icon(Icons.info_outline_rounded, color: context.colors.mutedForeground, size: 18),
               SizedBox(width: 10),
               Expanded(
                 child: Text(
                   'Didn\'t receive it? Check your spam folder or try again.',
-                  style: TextStyle(color: AppPalette.mutedForeground, fontSize: 13),
+                  style: TextStyle(color: context.colors.mutedForeground, fontSize: 13),
                 ),
               ),
             ],

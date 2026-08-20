@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
 
                 return RefreshIndicator(
-                  color: AppPalette.primary,
+                  color: context.colors.primary,
                   onRefresh: () => context
                       .read<CatalogCubit>()
                       .loadInitial(isRefresh: true),
@@ -103,10 +103,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             if (_searchQuery.trim().isEmpty) ...[
-                              const Text(
+                              Text(
                                 'Featured',
                                 style: TextStyle(
-                                  color: AppPalette.foreground,
+                                  color: context.colors.foreground,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 18,
                                 ),
@@ -140,10 +140,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text(
+                                    Text(
                                       'Shop by Category',
                                       style: TextStyle(
-                                        color: AppPalette.foreground,
+                                        color: context.colors.foreground,
                                         fontWeight: FontWeight.w700,
                                         fontSize: 18,
                                       ),
@@ -198,10 +198,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 const SizedBox(height: 20),
                               ],
 
-                              const Text(
+                              Text(
                                 'All Products',
                                 style: TextStyle(
-                                  color: AppPalette.foreground,
+                                  color: context.colors.foreground,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 18,
                                 ),
@@ -267,9 +267,9 @@ class _HomeHeader extends StatelessWidget {
       ),
       child: Container(
       height: 180,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [AppPalette.primary, AppPalette.secondary],
+          colors: [context.colors.primary, context.colors.secondary],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -326,8 +326,8 @@ class _HomeHeader extends StatelessWidget {
                     ),
                     child: Text(
                       cartCount > 9 ? '9+' : '$cartCount',
-                      style: const TextStyle(
-                        color: AppPalette.primary,
+                      style: TextStyle(
+                        color: context.colors.primary,
                         fontSize: 9,
                         fontWeight: FontWeight.w800,
                       ),
@@ -379,7 +379,7 @@ class _SearchBar extends StatelessWidget {
             borderSide: BorderSide.none,
           ),
           filled: true,
-          fillColor: AppPalette.card,
+          fillColor: context.colors.card,
           contentPadding: const EdgeInsets.symmetric(vertical: 0),
         ),
       ),
@@ -409,7 +409,7 @@ class _FeaturedCard extends StatelessWidget {
               errorBuilder: (_, __, ___) => Container(
                 width: 200,
                 height: 170,
-                color: AppPalette.muted,
+                color: context.colors.muted,
               ),
             ),
             Container(
@@ -433,7 +433,7 @@ class _FeaturedCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 3),
                       decoration: BoxDecoration(
-                        color: AppPalette.primary,
+                        color: context.colors.primary,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
@@ -486,10 +486,10 @@ class _AllCategoryChip extends StatelessWidget {
       child: Ink(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
-          color: selected ? AppPalette.primary : AppPalette.card,
+          color: selected ? context.colors.primary : context.colors.card,
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
-            color: selected ? AppPalette.primary : AppPalette.border,
+            color: selected ? context.colors.primary : context.colors.border,
           ),
         ),
         child: Row(
@@ -498,13 +498,13 @@ class _AllCategoryChip extends StatelessWidget {
             Icon(
               Icons.apps_rounded,
               size: 15,
-              color: selected ? Colors.white : AppPalette.primary,
+              color: selected ? Colors.white : context.colors.primary,
             ),
             const SizedBox(width: 6),
             Text(
               'All',
               style: TextStyle(
-                color: selected ? Colors.white : AppPalette.foreground,
+                color: selected ? Colors.white : context.colors.foreground,
                 fontWeight: FontWeight.w500,
                 fontSize: 13,
               ),

@@ -1,28 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopease_mobile/services/local_storage_service.dart';
 
-class ThemeController extends ChangeNotifier {
-  ThemeController({required this.storageService});
+class ThemeController extends Cubit<ThemeMode> {
+  ThemeController({required this.storageService}) : super(ThemeMode.system);
 
   final LocalStorageService storageService;
-  ThemeMode _themeMode = ThemeMode.system;
-
-  ThemeMode get themeMode => _themeMode;
 
   Future<void> restoreTheme() async {
     final savedTheme = await storageService.getThemeMode();
     if (savedTheme == null) return;
-    _themeMode = ThemeMode.values.firstWhere(
+    final mode = ThemeMode.values.firstWhere(
       (mode) => mode.name == savedTheme,
       orElse: () => ThemeMode.system,
     );
-    notifyListeners();
+    emit(mode);
   }
 
   Future<void> setThemeMode(ThemeMode mode) async {
-    if (_themeMode == mode) return;
-    _themeMode = mode;
-    notifyListeners();
+    if (state == mode) return;
+    emit(mode);
     await storageService.saveThemeMode(mode.name);
   }
 }

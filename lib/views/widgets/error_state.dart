@@ -19,17 +19,17 @@ class ErrorState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(
+            Icon(
               Icons.error_outline_rounded,
               size: 52,
-              color: AppPalette.mutedForeground,
+              color: context.colors.mutedForeground,
             ),
             const SizedBox(height: 12),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: AppPalette.foreground,
+              style: TextStyle(
+                color: context.colors.foreground,
                 fontSize: 15,
               ),
             ),

@@ -17,17 +17,17 @@ class CategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categoryColor = _colorFromHex(category.colorHex);
+    final categoryColor = _colorFromHex(context, category.colorHex);
     return InkWell(
       borderRadius: BorderRadius.circular(24),
       onTap: onTap,
       child: Ink(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
-          color: selected ? categoryColor : AppPalette.card,
+          color: selected ? categoryColor : context.colors.card,
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
-            color: selected ? categoryColor : AppPalette.border,
+            color: selected ? categoryColor : context.colors.border,
           ),
         ),
         child: Row(
@@ -42,7 +42,7 @@ class CategoryChip extends StatelessWidget {
             Text(
               category.name,
               style: TextStyle(
-                color: selected ? Colors.white : AppPalette.foreground,
+                color: selected ? Colors.white : context.colors.foreground,
                 fontWeight: FontWeight.w500,
                 fontSize: 13,
               ),
@@ -53,10 +53,10 @@ class CategoryChip extends StatelessWidget {
     );
   }
 
-  Color _colorFromHex(String hex) {
+  Color _colorFromHex(BuildContext context, String hex) {
     final raw = hex.replaceFirst('#', '');
     final normalized = raw.length == 6 ? 'FF$raw' : raw;
     final value = int.tryParse(normalized, radix: 16);
-    return value == null ? AppPalette.secondary : Color(value);
+    return value == null ? context.colors.secondary : Color(value);
   }
 }

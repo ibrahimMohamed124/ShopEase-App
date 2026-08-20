@@ -26,7 +26,7 @@ class SearchField extends StatelessWidget {
       onSubmitted: onSubmitted,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: const TextStyle(color: AppPalette.mutedForeground),
+        hintStyle: TextStyle(color: context.colors.mutedForeground),
         prefixIcon: const Icon(Icons.search_rounded),
         suffixIcon:
             value.isEmpty

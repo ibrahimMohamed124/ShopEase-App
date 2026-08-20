@@ -134,7 +134,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppPalette.background,
+      backgroundColor: context.colors.background,
       body: Stack(
         children: [
           // Background glow
@@ -142,7 +142,7 @@ class _SplashScreenState extends State<SplashScreen>
             top: -100,
             left: -80,
             child: _GlowCircle(
-              color: AppPalette.primary.withOpacity(0.12),
+              color: context.colors.primary.withOpacity(0.12),
               size: 380,
             ),
           ),
@@ -150,7 +150,7 @@ class _SplashScreenState extends State<SplashScreen>
             bottom: -120,
             right: -60,
             child: _GlowCircle(
-              color: AppPalette.secondary.withOpacity(0.10),
+              color: context.colors.secondary.withOpacity(0.10),
               size: 340,
             ),
           ),
@@ -175,15 +175,15 @@ class _SplashScreenState extends State<SplashScreen>
                         width: 100,
                         height: 100,
                         decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [AppPalette.primary, AppPalette.secondary],
+                          gradient: LinearGradient(
+                            colors: [context.colors.primary, context.colors.secondary],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),
                           borderRadius: BorderRadius.circular(28),
                           boxShadow: [
                             BoxShadow(
-                              color: AppPalette.primary.withOpacity(0.4),
+                              color: context.colors.primary.withOpacity(0.4),
                               blurRadius: 30,
                               offset: const Offset(0, 10),
                             ),
@@ -203,14 +203,14 @@ class _SplashScreenState extends State<SplashScreen>
                 // Brand name
                 FadeTransition(
                   opacity: _textOpacity,
-                  child: const Column(
+                  child: Column(
                     children: [
                       Text(
                         'ShopEase',
                         style: TextStyle(
                           fontSize: 34,
                           fontWeight: FontWeight.w800,
-                          color: AppPalette.foreground,
+                          color: context.colors.foreground,
                           letterSpacing: -1,
                         ),
                       ),
@@ -219,7 +219,7 @@ class _SplashScreenState extends State<SplashScreen>
                         'Your premium shopping experience',
                         style: TextStyle(
                           fontSize: 14,
-                          color: AppPalette.mutedForeground,
+                          color: context.colors.mutedForeground,
                           letterSpacing: 0.2,
                         ),
                       ),
@@ -241,9 +241,9 @@ class _SplashScreenState extends State<SplashScreen>
                             borderRadius: BorderRadius.circular(4),
                             child: LinearProgressIndicator(
                               value: _loadBar.value,
-                              backgroundColor: AppPalette.muted,
-                              valueColor: const AlwaysStoppedAnimation<Color>(
-                                AppPalette.primary,
+                              backgroundColor: context.colors.muted,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                context.colors.primary,
                               ),
                               minHeight: 4,
                             ),

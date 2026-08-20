@@ -54,13 +54,13 @@ class _OrdersView extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         children: [
           const SizedBox(height: 80),
-          const Icon(Icons.error_outline_rounded,
-              size: 48, color: AppPalette.destructive),
+          Icon(Icons.error_outline_rounded,
+              size: 48, color: context.colors.destructive),
           const SizedBox(height: 12),
           Text(
             state.error!,
             textAlign: TextAlign.center,
-            style: const TextStyle(color: AppPalette.mutedForeground),
+            style: TextStyle(color: context.colors.mutedForeground),
           ),
           const SizedBox(height: 16),
           Center(
@@ -76,16 +76,16 @@ class _OrdersView extends StatelessWidget {
     if (state.isEmpty) {
       return ListView(
         padding: const EdgeInsets.all(24),
-        children: const [
+        children: [
           SizedBox(height: 80),
           Icon(Icons.receipt_long_outlined,
-              size: 48, color: AppPalette.mutedForeground),
+              size: 48, color: context.colors.mutedForeground),
           SizedBox(height: 12),
           Text(
             'No orders yet',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: AppPalette.foreground,
+              color: context.colors.foreground,
               fontWeight: FontWeight.w700,
               fontSize: 16,
             ),
@@ -94,7 +94,7 @@ class _OrdersView extends StatelessWidget {
           Text(
             'Your placed orders will show up here.',
             textAlign: TextAlign.center,
-            style: TextStyle(color: AppPalette.mutedForeground),
+            style: TextStyle(color: context.colors.mutedForeground),
           ),
         ],
       );
@@ -136,8 +136,8 @@ class _OrderCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       '#${order.id}',
-                      style: const TextStyle(
-                        color: AppPalette.foreground,
+                      style: TextStyle(
+                        color: context.colors.foreground,
                         fontWeight: FontWeight.w700,
                         fontSize: 15,
                       ),
@@ -164,8 +164,8 @@ class _OrderCard extends StatelessWidget {
                           : order.items.map((i) => i.name).join(', '),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: AppPalette.foreground,
+                      style: TextStyle(
+                        color: context.colors.foreground,
                         fontSize: 12.5,
                         height: 1.3,
                       ),
@@ -179,13 +179,13 @@ class _OrderCard extends StatelessWidget {
               Row(
                 children: [
                   Icon(_deliveryIcon(order.status),
-                      size: 14, color: _deliveryColor(order.status)),
+                      size: 14, color: _deliveryColor(context, order.status)),
                   const SizedBox(width: 6),
                   Expanded(
                     child: Text(
                       _deliveryLabel(order),
                       style: TextStyle(
-                        color: _deliveryColor(order.status),
+                        color: _deliveryColor(context, order.status),
                         fontSize: 12.5,
                         fontWeight: FontWeight.w600,
                       ),
@@ -196,22 +196,22 @@ class _OrderCard extends StatelessWidget {
               const SizedBox(height: 8),
               Row(
                 children: [
-                  const Icon(Icons.calendar_today_outlined,
-                      size: 14, color: AppPalette.mutedForeground),
+                  Icon(Icons.calendar_today_outlined,
+                      size: 14, color: context.colors.mutedForeground),
                   const SizedBox(width: 6),
                   Text(
                     'Placed ${DateFormatter.date(order.date)}',
-                    style: const TextStyle(
-                        color: AppPalette.mutedForeground, fontSize: 12.5),
+                    style: TextStyle(
+                        color: context.colors.mutedForeground, fontSize: 12.5),
                   ),
                   const Spacer(),
-                  const Icon(Icons.shopping_bag_outlined,
-                      size: 14, color: AppPalette.mutedForeground),
+                  Icon(Icons.shopping_bag_outlined,
+                      size: 14, color: context.colors.mutedForeground),
                   const SizedBox(width: 6),
                   Text(
                     '${order.itemCount} item${order.itemCount == 1 ? '' : 's'}',
-                    style: const TextStyle(
-                        color: AppPalette.mutedForeground, fontSize: 12.5),
+                    style: TextStyle(
+                        color: context.colors.mutedForeground, fontSize: 12.5),
                   ),
                 ],
               ),
@@ -222,15 +222,15 @@ class _OrderCard extends StatelessWidget {
                 Row(
                   children: [
                     Icon(_paymentIcon(order.paymentMethod!.type),
-                        size: 14, color: AppPalette.mutedForeground),
+                        size: 14, color: context.colors.mutedForeground),
                     const SizedBox(width: 6),
                     Text(
                       order.paymentMethod!.isCard &&
                               order.paymentMethod!.lastFour != null
                           ? '${order.paymentMethod!.displayName} •••• ${order.paymentMethod!.lastFour}'
                           : order.paymentMethod!.displayName,
-                      style: const TextStyle(
-                          color: AppPalette.mutedForeground, fontSize: 12.5),
+                      style: TextStyle(
+                          color: context.colors.mutedForeground, fontSize: 12.5),
                     ),
                   ],
                 ),
@@ -245,8 +245,8 @@ class _OrderCard extends StatelessWidget {
                 children: [
                   Text(
                     'Total: \$${order.total.toStringAsFixed(2)}',
-                    style: const TextStyle(
-                      color: AppPalette.foreground,
+                    style: TextStyle(
+                      color: context.colors.foreground,
                       fontWeight: FontWeight.w700,
                       fontSize: 15,
                     ),
@@ -260,21 +260,21 @@ class _OrderCard extends StatelessWidget {
                               ? null
                               : () => _confirmCancel(context, order),
                           style: OutlinedButton.styleFrom(
-                            foregroundColor: AppPalette.destructive,
-                            side: const BorderSide(
-                                color: AppPalette.destructive),
+                            foregroundColor: context.colors.destructive,
+                            side: BorderSide(
+                                color: context.colors.destructive),
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 12, vertical: 6),
                             minimumSize: Size.zero,
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
                           child: isCancelling
-                              ? const SizedBox(
+                              ? SizedBox(
                                   width: 12,
                                   height: 12,
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2,
-                                    color: AppPalette.destructive,
+                                    color: context.colors.destructive,
                                   ),
                                 )
                               : const Text('Cancel Order',
@@ -326,11 +326,12 @@ class _OrderCard extends StatelessWidget {
         OrderStatus.cancelled => Icons.cancel_outlined,
       };
 
-  Color _deliveryColor(OrderStatus status) => switch (status) {
-        OrderStatus.processing => AppPalette.star,
-        OrderStatus.shipped => AppPalette.secondary,
-        OrderStatus.delivered => AppPalette.success,
-        OrderStatus.cancelled => AppPalette.destructive,
+  Color _deliveryColor(BuildContext context, OrderStatus status) =>
+      switch (status) {
+        OrderStatus.processing => context.colors.star,
+        OrderStatus.shipped => context.colors.secondary,
+        OrderStatus.delivered => context.colors.success,
+        OrderStatus.cancelled => context.colors.destructive,
       };
 
   String _deliveryLabel(Order order) => switch (order.status) {
@@ -359,12 +360,12 @@ class _OrderCard extends StatelessWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: AppPalette.card,
-        title: const Text('Cancel Order',
-            style: TextStyle(color: AppPalette.foreground)),
+        backgroundColor: context.colors.card,
+        title: Text('Cancel Order',
+            style: TextStyle(color: context.colors.foreground)),
         content: Text(
           'Are you sure you want to cancel order #${order.id}? This cannot be undone.',
-          style: const TextStyle(color: AppPalette.mutedForeground),
+          style: TextStyle(color: context.colors.mutedForeground),
         ),
         actions: [
           TextButton(
@@ -373,8 +374,8 @@ class _OrderCard extends StatelessWidget {
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Cancel Order',
-                style: TextStyle(color: AppPalette.destructive)),
+            child: Text('Cancel Order',
+                style: TextStyle(color: context.colors.destructive)),
           ),
         ],
       ),
@@ -427,12 +428,12 @@ class _ItemThumbnails extends StatelessWidget {
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-          color: AppPalette.muted,
+          color: context.colors.muted,
           borderRadius: BorderRadius.circular(10),
         ),
         alignment: Alignment.center,
-        child: const Icon(Icons.shopping_bag_outlined,
-            size: 18, color: AppPalette.mutedForeground),
+        child: Icon(Icons.shopping_bag_outlined,
+            size: 18, color: context.colors.mutedForeground),
       );
     }
 
@@ -456,9 +457,9 @@ class _ItemThumbnails extends StatelessWidget {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: AppPalette.foreground.withValues(alpha: 0.75),
+                  color: context.colors.foreground.withValues(alpha: 0.75),
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: AppPalette.card, width: 2),
+                  border: Border.all(color: context.colors.card, width: 2),
                 ),
                 alignment: Alignment.center,
                 child: Text(
@@ -487,22 +488,22 @@ class _Thumbnail extends StatelessWidget {
       width: 40,
       height: 40,
       decoration: BoxDecoration(
-        color: AppPalette.muted,
+        color: context.colors.muted,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: AppPalette.card, width: 2),
+        border: Border.all(color: context.colors.card, width: 2),
       ),
       clipBehavior: Clip.antiAlias,
       child: imageUrl.isNotEmpty
           ? Image.network(
               imageUrl,
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => const Icon(
+              errorBuilder: (_, __, ___) => Icon(
                   Icons.image_not_supported_outlined,
                   size: 16,
-                  color: AppPalette.mutedForeground),
+                  color: context.colors.mutedForeground),
             )
-          : const Icon(Icons.image_not_supported_outlined,
-              size: 16, color: AppPalette.mutedForeground),
+          : Icon(Icons.image_not_supported_outlined,
+              size: 16, color: context.colors.mutedForeground),
     );
   }
 }
@@ -514,10 +515,10 @@ class _StatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (label, color) = switch (status) {
-      OrderStatus.processing => ('Processing', AppPalette.star),
-      OrderStatus.shipped => ('Shipped', AppPalette.secondary),
-      OrderStatus.delivered => ('Delivered', AppPalette.success),
-      OrderStatus.cancelled => ('Cancelled', AppPalette.destructive),
+      OrderStatus.processing => ('Processing', context.colors.star),
+      OrderStatus.shipped => ('Shipped', context.colors.secondary),
+      OrderStatus.delivered => ('Delivered', context.colors.success),
+      OrderStatus.cancelled => ('Cancelled', context.colors.destructive),
     };
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),

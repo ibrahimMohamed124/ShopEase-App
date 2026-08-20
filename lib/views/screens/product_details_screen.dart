@@ -65,7 +65,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     final cartState = context.read<CartCubit>().state;
 
     return Scaffold(
-      backgroundColor: AppPalette.background,
+      backgroundColor: context.colors.background,
       body: FutureBuilder<Product?>(
         future: _productFuture,
         builder: (context, snapshot) {
@@ -126,7 +126,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
                   SliverToBoxAdapter(
                     child: Container(
-                      color: AppPalette.background,
+                      color: context.colors.background,
                       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,7 +143,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               Icon(
                                 Icons.share_outlined,
                                 size: 20,
-                                color: AppPalette.mutedForeground,
+                                color: context.colors.mutedForeground,
                               ),
                             ],
                           ),
@@ -152,8 +152,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           // ── Name ─────────────────────────────────────
                           Text(
                             product.name,
-                            style: const TextStyle(
-                              color: AppPalette.foreground,
+                            style: TextStyle(
+                              color: context.colors.foreground,
                               fontSize: 24,
                               fontWeight: FontWeight.w800,
                               height: 1.2,
@@ -196,7 +196,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,
                                     minimumSize: Size.zero,
-                                    foregroundColor: AppPalette.secondary,
+                                    foregroundColor: context.colors.secondary,
                                   ),
                                   child: const Text(
                                     'Size Guide',
@@ -374,10 +374,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
+                    Text(
                       'Size Guide',
                       style: TextStyle(
-                        color: AppPalette.foreground,
+                        color: context.colors.foreground,
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
@@ -390,7 +390,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ),
                 const SizedBox(height: 12),
                 Table(
-                  border: TableBorder.all(color: AppPalette.border, width: 1),
+                  border: TableBorder.all(color: context.colors.border, width: 1),
                   columnWidths: const {
                     0: FlexColumnWidth(1),
                     1: FlexColumnWidth(1.2),
@@ -418,7 +418,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   TableRow _tableHeader(List<String> cells) => TableRow(
-    decoration: const BoxDecoration(color: AppPalette.muted),
+    decoration: BoxDecoration(color: context.colors.muted),
     children:
         cells
             .map(
@@ -426,8 +426,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 padding: const EdgeInsets.all(8),
                 child: Text(
                   c,
-                  style: const TextStyle(
-                    color: AppPalette.foreground,
+                  style: TextStyle(
+                    color: context.colors.foreground,
                     fontWeight: FontWeight.w700,
                     fontSize: 12,
                   ),
@@ -445,8 +445,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 padding: const EdgeInsets.all(8),
                 child: Text(
                   c,
-                  style: const TextStyle(
-                    color: AppPalette.foreground,
+                  style: TextStyle(
+                    color: context.colors.foreground,
                     fontSize: 12,
                   ),
                 ),
@@ -565,13 +565,13 @@ class _ImageGallery extends StatelessWidget {
                   fit: BoxFit.cover,
                   width: double.infinity,
                   errorBuilder:
-                      (_, __, ___) => const ColoredBox(
-                        color: AppPalette.muted,
+                      (_, __, ___) => ColoredBox(
+                        color: context.colors.muted,
                         child: Center(
                           child: Icon(
                             Icons.broken_image_outlined,
                             size: 48,
-                            color: AppPalette.mutedForeground,
+                            color: context.colors.mutedForeground,
                           ),
                         ),
                       ),
@@ -597,7 +597,7 @@ class _ImageGallery extends StatelessWidget {
                         ? Icons.favorite_rounded
                         : Icons.favorite_border_rounded,
                 iconColor:
-                    isFavorite ? AppPalette.primary : AppPalette.foreground,
+                    isFavorite ? context.colors.primary : context.colors.foreground,
                 onTap: onFavoriteTap,
               ),
             ),
@@ -618,7 +618,7 @@ class _ImageGallery extends StatelessWidget {
                     decoration: BoxDecoration(
                       color:
                           currentIndex == i
-                              ? AppPalette.primary
+                              ? context.colors.primary
                               : Colors.white.withValues(alpha: 0.7),
                       borderRadius: BorderRadius.circular(4),
                     ),
@@ -663,7 +663,7 @@ class _CircleIconBtn extends StatelessWidget {
           ],
         ),
         alignment: Alignment.center,
-        child: Icon(icon, size: 20, color: iconColor ?? AppPalette.foreground),
+        child: Icon(icon, size: 20, color: iconColor ?? context.colors.foreground),
       ),
     );
   }
@@ -680,8 +680,8 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: const TextStyle(
-        color: AppPalette.foreground,
+      style: TextStyle(
+        color: context.colors.foreground,
         fontWeight: FontWeight.w700,
         fontSize: 15,
       ),
@@ -698,10 +698,10 @@ class _Badge extends StatelessWidget {
   Widget build(BuildContext context) {
     final color =
         label == 'New'
-            ? AppPalette.secondary
+            ? context.colors.secondary
             : label == 'Sale'
-            ? AppPalette.primary
-            : AppPalette.star;
+            ? context.colors.primary
+            : context.colors.star;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -731,7 +731,7 @@ class _StockChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: (inStock ? AppPalette.success : AppPalette.destructive)
+        color: (inStock ? context.colors.success : context.colors.destructive)
             .withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),
       ),
@@ -743,13 +743,13 @@ class _StockChip extends StatelessWidget {
                 ? Icons.check_circle_outline_rounded
                 : Icons.remove_circle_outline_rounded,
             size: 13,
-            color: inStock ? AppPalette.success : AppPalette.destructive,
+            color: inStock ? context.colors.success : context.colors.destructive,
           ),
           const SizedBox(width: 4),
           Text(
             inStock ? 'In Stock' : 'Out of Stock',
             style: TextStyle(
-              color: inStock ? AppPalette.success : AppPalette.destructive,
+              color: inStock ? context.colors.success : context.colors.destructive,
               fontSize: 12,
               fontWeight: FontWeight.w600,
             ),
@@ -779,15 +779,15 @@ class _RatingRow extends StatelessWidget {
                 : half
                 ? Icons.star_half_rounded
                 : Icons.star_outline_rounded,
-            color: AppPalette.star,
+            color: context.colors.star,
             size: 18,
           );
         }),
         const SizedBox(width: 6),
         Text(
           rating.toStringAsFixed(1),
-          style: const TextStyle(
-            color: AppPalette.foreground,
+          style: TextStyle(
+            color: context.colors.foreground,
             fontWeight: FontWeight.w700,
             fontSize: 14,
           ),
@@ -795,8 +795,8 @@ class _RatingRow extends StatelessWidget {
         const SizedBox(width: 4),
         Text(
           '($reviewCount reviews)',
-          style: const TextStyle(
-            color: AppPalette.mutedForeground,
+          style: TextStyle(
+            color: context.colors.mutedForeground,
             fontSize: 13,
           ),
         ),
@@ -823,8 +823,8 @@ class _PriceRow extends StatelessWidget {
       children: [
         Text(
           '\$${price.toStringAsFixed(2)}',
-          style: const TextStyle(
-            color: AppPalette.primary,
+          style: TextStyle(
+            color: context.colors.primary,
             fontWeight: FontWeight.w800,
             fontSize: 30,
           ),
@@ -835,8 +835,8 @@ class _PriceRow extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 4),
             child: Text(
               '\$${originalPrice!.toStringAsFixed(2)}',
-              style: const TextStyle(
-                color: AppPalette.mutedForeground,
+              style: TextStyle(
+                color: context.colors.mutedForeground,
                 decoration: TextDecoration.lineThrough,
                 fontSize: 16,
               ),
@@ -848,13 +848,13 @@ class _PriceRow extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
               decoration: BoxDecoration(
-                color: AppPalette.success.withValues(alpha: 0.12),
+                color: context.colors.success.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
                 '$discountPct% OFF',
-                style: const TextStyle(
-                  color: AppPalette.success,
+                style: TextStyle(
+                  color: context.colors.success,
                   fontSize: 11,
                   fontWeight: FontWeight.w700,
                 ),
@@ -903,14 +903,14 @@ class _ColorSelector extends StatelessWidget {
                   color: Color(c.hex),
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: isSelected ? AppPalette.primary : AppPalette.border,
+                    color: isSelected ? context.colors.primary : context.colors.border,
                     width: isSelected ? 2.5 : 1.5,
                   ),
                   boxShadow:
                       isSelected
                           ? [
                             BoxShadow(
-                              color: AppPalette.primary.withValues(alpha: 0.35),
+                              color: context.colors.primary.withValues(alpha: 0.35),
                               blurRadius: 6,
                               offset: const Offset(0, 2),
                             ),
@@ -953,17 +953,17 @@ class _SizeSelector extends StatelessWidget {
                   vertical: 8,
                 ),
                 decoration: BoxDecoration(
-                  color: isSelected ? AppPalette.primary : AppPalette.card,
+                  color: isSelected ? context.colors.primary : context.colors.card,
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
-                    color: isSelected ? AppPalette.primary : AppPalette.border,
+                    color: isSelected ? context.colors.primary : context.colors.border,
                     width: isSelected ? 2 : 1,
                   ),
                 ),
                 child: Text(
                   s,
                   style: TextStyle(
-                    color: isSelected ? Colors.white : AppPalette.foreground,
+                    color: isSelected ? Colors.white : context.colors.foreground,
                     fontWeight: FontWeight.w600,
                     fontSize: 13,
                   ),
@@ -992,7 +992,7 @@ class _QuantitySelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppPalette.muted,
+        color: context.colors.muted,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -1004,8 +1004,8 @@ class _QuantitySelector extends StatelessWidget {
             child: Text(
               '$quantity',
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: AppPalette.foreground,
+              style: TextStyle(
+                color: context.colors.foreground,
                 fontWeight: FontWeight.w700,
                 fontSize: 16,
               ),
@@ -1036,8 +1036,8 @@ class _QtyBtn extends StatelessWidget {
           size: 18,
           color:
               onTap == null
-                  ? AppPalette.mutedForeground
-                  : AppPalette.foreground,
+                  ? context.colors.mutedForeground
+                  : context.colors.foreground,
         ),
       ),
     );
@@ -1057,7 +1057,7 @@ class _GuaranteeRow extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppPalette.muted,
+        color: context.colors.muted,
         borderRadius: BorderRadius.circular(14),
       ),
       child: Row(
@@ -1065,19 +1065,19 @@ class _GuaranteeRow extends StatelessWidget {
           _GuaranteeItem(
             icon: Icons.local_shipping_outlined,
             label: freeShipping ? 'Free Shipping' : 'Fast Delivery',
-            color: AppPalette.success,
+            color: context.colors.success,
           ),
           _GuaranteeDivider(),
           _GuaranteeItem(
             icon: Icons.assignment_return_outlined,
             label: '30-Day Return',
-            color: AppPalette.secondary,
+            color: context.colors.secondary,
           ),
           _GuaranteeDivider(),
           _GuaranteeItem(
             icon: Icons.verified_user_outlined,
             label: '1-Year Warranty',
-            color: AppPalette.star,
+            color: context.colors.star,
           ),
         ],
       ),
@@ -1106,8 +1106,8 @@ class _GuaranteeItem extends StatelessWidget {
           Text(
             label,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: AppPalette.foreground,
+            style: TextStyle(
+              color: context.colors.foreground,
               fontSize: 10,
               fontWeight: FontWeight.w600,
             ),
@@ -1121,7 +1121,7 @@ class _GuaranteeItem extends StatelessWidget {
 class _GuaranteeDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(width: 1, height: 32, color: AppPalette.border);
+    return Container(width: 1, height: 32, color: context.colors.border);
   }
 }
 
@@ -1149,8 +1149,8 @@ class _ExpandableDescription extends StatelessWidget {
       children: [
         Text(
           displayText,
-          style: const TextStyle(
-            color: AppPalette.mutedForeground,
+          style: TextStyle(
+            color: context.colors.mutedForeground,
             fontSize: 14,
             height: 1.65,
           ),
@@ -1161,8 +1161,8 @@ class _ExpandableDescription extends StatelessWidget {
             onTap: onToggle,
             child: Text(
               expanded ? 'Read less' : 'Read more',
-              style: const TextStyle(
-                color: AppPalette.primary,
+              style: TextStyle(
+                color: context.colors.primary,
                 fontWeight: FontWeight.w600,
                 fontSize: 13,
               ),
@@ -1203,11 +1203,11 @@ class _SpecificationsCardState extends State<_SpecificationsCard> {
           onTap: () => setState(() => _expanded = !_expanded),
           child: Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: Text(
                   'Specifications',
                   style: TextStyle(
-                    color: AppPalette.foreground,
+                    color: context.colors.foreground,
                     fontWeight: FontWeight.w700,
                     fontSize: 15,
                   ),
@@ -1217,7 +1217,7 @@ class _SpecificationsCardState extends State<_SpecificationsCard> {
                 _expanded
                     ? Icons.keyboard_arrow_up_rounded
                     : Icons.keyboard_arrow_down_rounded,
-                color: AppPalette.mutedForeground,
+                color: context.colors.mutedForeground,
               ),
             ],
           ),
@@ -1228,9 +1228,9 @@ class _SpecificationsCardState extends State<_SpecificationsCard> {
             padding: const EdgeInsets.only(top: 12),
             child: Container(
               decoration: BoxDecoration(
-                color: AppPalette.card,
+                color: context.colors.card,
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: AppPalette.border),
+                border: Border.all(color: context.colors.border),
               ),
               child: Column(
                 children:
@@ -1245,9 +1245,9 @@ class _SpecificationsCardState extends State<_SpecificationsCard> {
                           border:
                               isLast
                                   ? null
-                                  : const Border(
+                                  : Border(
                                     bottom: BorderSide(
-                                      color: AppPalette.border,
+                                      color: context.colors.border,
                                     ),
                                   ),
                         ),
@@ -1257,8 +1257,8 @@ class _SpecificationsCardState extends State<_SpecificationsCard> {
                               width: 120,
                               child: Text(
                                 entry.value.label,
-                                style: const TextStyle(
-                                  color: AppPalette.mutedForeground,
+                                style: TextStyle(
+                                  color: context.colors.mutedForeground,
                                   fontSize: 13,
                                 ),
                               ),
@@ -1266,8 +1266,8 @@ class _SpecificationsCardState extends State<_SpecificationsCard> {
                             Expanded(
                               child: Text(
                                 entry.value.value,
-                                style: const TextStyle(
-                                  color: AppPalette.foreground,
+                                style: TextStyle(
+                                  color: context.colors.foreground,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 13,
                                 ),
@@ -1346,11 +1346,11 @@ class _ReviewsSection extends StatelessWidget {
             // ── Header ───────────────────────────────────────────────────
             Row(
               children: [
-                const Expanded(
+                Expanded(
                   child: Text(
                     'Customer Reviews',
                     style: TextStyle(
-                      color: AppPalette.foreground,
+                      color: context.colors.foreground,
                       fontWeight: FontWeight.w700,
                       fontSize: 15,
                     ),
@@ -1371,7 +1371,7 @@ class _ReviewsSection extends StatelessWidget {
                           : const Icon(Icons.edit_outlined, size: 15),
                   label: const Text('Write a Review'),
                   style: TextButton.styleFrom(
-                    foregroundColor: AppPalette.primary,
+                    foregroundColor: context.colors.primary,
                     textStyle: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -1399,8 +1399,8 @@ class _ReviewsSection extends StatelessWidget {
                     children: [
                       Text(
                         rating.toStringAsFixed(1),
-                        style: const TextStyle(
-                          color: AppPalette.foreground,
+                        style: TextStyle(
+                          color: context.colors.foreground,
                           fontWeight: FontWeight.w800,
                           fontSize: 44,
                         ),
@@ -1412,7 +1412,7 @@ class _ReviewsSection extends StatelessWidget {
                             i < rating.floor()
                                 ? Icons.star_rounded
                                 : Icons.star_outline_rounded,
-                            color: AppPalette.star,
+                            color: context.colors.star,
                             size: 14,
                           ),
                         ),
@@ -1420,8 +1420,8 @@ class _ReviewsSection extends StatelessWidget {
                       const SizedBox(height: 4),
                       Text(
                         '${reviews.length} reviews',
-                        style: const TextStyle(
-                          color: AppPalette.mutedForeground,
+                        style: TextStyle(
+                          color: context.colors.mutedForeground,
                           fontSize: 11,
                         ),
                       ),
@@ -1485,21 +1485,21 @@ class _RatingBar extends StatelessWidget {
         children: [
           Text(
             '$star',
-            style: const TextStyle(
-              color: AppPalette.mutedForeground,
+            style: TextStyle(
+              color: context.colors.mutedForeground,
               fontSize: 11,
             ),
           ),
           const SizedBox(width: 4),
-          const Icon(Icons.star_rounded, color: AppPalette.star, size: 11),
+          Icon(Icons.star_rounded, color: context.colors.star, size: 11),
           const SizedBox(width: 6),
           Expanded(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(4),
               child: LinearProgressIndicator(
                 value: fraction,
-                backgroundColor: AppPalette.muted,
-                color: AppPalette.star,
+                backgroundColor: context.colors.muted,
+                color: context.colors.star,
                 minHeight: 6,
               ),
             ),
@@ -1507,8 +1507,8 @@ class _RatingBar extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             '${(fraction * 100).round()}%',
-            style: const TextStyle(
-              color: AppPalette.mutedForeground,
+            style: TextStyle(
+              color: context.colors.mutedForeground,
               fontSize: 10,
             ),
           ),
@@ -1529,9 +1529,9 @@ class _ReviewCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppPalette.card,
+        color: context.colors.card,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppPalette.border),
+        border: Border.all(color: context.colors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1540,11 +1540,11 @@ class _ReviewCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 16,
-                backgroundColor: AppPalette.secondary.withValues(alpha: 0.15),
+                backgroundColor: context.colors.secondary.withValues(alpha: 0.15),
                 child: Text(
                   review.name[0],
-                  style: const TextStyle(
-                    color: AppPalette.secondary,
+                  style: TextStyle(
+                    color: context.colors.secondary,
                     fontWeight: FontWeight.w700,
                     fontSize: 14,
                   ),
@@ -1559,24 +1559,24 @@ class _ReviewCard extends StatelessWidget {
                       children: [
                         Text(
                           review.name,
-                          style: const TextStyle(
-                            color: AppPalette.foreground,
+                          style: TextStyle(
+                            color: context.colors.foreground,
                             fontWeight: FontWeight.w600,
                             fontSize: 13,
                           ),
                         ),
                         if (review.verified) ...[
                           const SizedBox(width: 6),
-                          const Icon(
+                          Icon(
                             Icons.verified_rounded,
-                            color: AppPalette.success,
+                            color: context.colors.success,
                             size: 13,
                           ),
                           const SizedBox(width: 2),
-                          const Text(
+                          Text(
                             'Verified',
                             style: TextStyle(
-                              color: AppPalette.success,
+                              color: context.colors.success,
                               fontSize: 10,
                             ),
                           ),
@@ -1585,8 +1585,8 @@ class _ReviewCard extends StatelessWidget {
                     ),
                     Text(
                       review.date,
-                      style: const TextStyle(
-                        color: AppPalette.mutedForeground,
+                      style: TextStyle(
+                        color: context.colors.mutedForeground,
                         fontSize: 11,
                       ),
                     ),
@@ -1600,7 +1600,7 @@ class _ReviewCard extends StatelessWidget {
                     i < review.rating
                         ? Icons.star_rounded
                         : Icons.star_outline_rounded,
-                    color: AppPalette.star,
+                    color: context.colors.star,
                     size: 13,
                   ),
                 ),
@@ -1610,8 +1610,8 @@ class _ReviewCard extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             review.text,
-            style: const TextStyle(
-              color: AppPalette.mutedForeground,
+            style: TextStyle(
+              color: context.colors.mutedForeground,
               fontSize: 13,
               height: 1.55,
             ),
@@ -1647,9 +1647,9 @@ class _BottomActionBar extends StatelessWidget {
       top: false,
       child: Container(
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-        decoration: const BoxDecoration(
-          color: AppPalette.card,
-          border: Border(top: BorderSide(color: AppPalette.border)),
+        decoration: BoxDecoration(
+          color: context.colors.card,
+          border: Border(top: BorderSide(color: context.colors.border)),
           boxShadow: [
             BoxShadow(
               color: Color(0x12000000),
@@ -1664,17 +1664,17 @@ class _BottomActionBar extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Total Price',
                   style: TextStyle(
-                    color: AppPalette.mutedForeground,
+                    color: context.colors.mutedForeground,
                     fontSize: 11,
                   ),
                 ),
                 Text(
                   '\$${total.toStringAsFixed(2)}',
-                  style: const TextStyle(
-                    color: AppPalette.primary,
+                  style: TextStyle(
+                    color: context.colors.primary,
                     fontWeight: FontWeight.w800,
                     fontSize: 20,
                   ),

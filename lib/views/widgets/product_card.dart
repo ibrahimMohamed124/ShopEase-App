@@ -28,9 +28,9 @@ class ProductCard extends StatelessWidget {
       child: Container(
         width: width,
         decoration: BoxDecoration(
-          color: AppPalette.card,
+          color: context.colors.card,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppPalette.border),
+          border: Border.all(color: context.colors.border),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,9 +48,9 @@ class ProductCard extends StatelessWidget {
                           width: width,
                           height: width * 0.85,
                           fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => _placeholder(),
+                          errorBuilder: (_, __, ___) => _placeholder(context),
                         )
-                      : _placeholder(),
+                      : _placeholder(context),
                 ),
                 // Badge
                 if (product.badge != null && product.badge!.isNotEmpty)
@@ -63,8 +63,8 @@ class ProductCard extends StatelessWidget {
                         vertical: 3,
                       ),
                       decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [AppPalette.primary, AppPalette.secondary],
+                        gradient: LinearGradient(
+                          colors: [context.colors.primary, context.colors.secondary],
                         ),
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -123,8 +123,8 @@ class ProductCard extends StatelessWidget {
                     product.name,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: AppPalette.foreground,
+                    style: TextStyle(
+                      color: context.colors.foreground,
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                       height: 1.3,
@@ -134,16 +134,16 @@ class ProductCard extends StatelessWidget {
                   // Rating
                   Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.star_rounded,
-                        color: AppPalette.star,
+                        color: context.colors.star,
                         size: 13,
                       ),
                       const SizedBox(width: 2),
                       Text(
                         product.rating.toStringAsFixed(1),
-                        style: const TextStyle(
-                          color: AppPalette.mutedForeground,
+                        style: TextStyle(
+                          color: context.colors.mutedForeground,
                           fontSize: 11,
                           fontWeight: FontWeight.w500,
                         ),
@@ -151,8 +151,8 @@ class ProductCard extends StatelessWidget {
                       const SizedBox(width: 3),
                       Text(
                         '(${product.reviewCount})',
-                        style: const TextStyle(
-                          color: AppPalette.mutedForeground,
+                        style: TextStyle(
+                          color: context.colors.mutedForeground,
                           fontSize: 11,
                         ),
                       ),
@@ -168,8 +168,8 @@ class ProductCard extends StatelessWidget {
                           children: [
                             Text(
                               '\$${product.price.toStringAsFixed(2)}',
-                              style: const TextStyle(
-                                color: AppPalette.primary,
+                              style: TextStyle(
+                                color: context.colors.primary,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
                               ),
@@ -177,8 +177,8 @@ class ProductCard extends StatelessWidget {
                             if (hasDiscount)
                               Text(
                                 '\$${product.originalPrice!.toStringAsFixed(2)}',
-                                style: const TextStyle(
-                                  color: AppPalette.mutedForeground,
+                                style: TextStyle(
+                                  color: context.colors.mutedForeground,
                                   fontSize: 11,
                                   decoration: TextDecoration.lineThrough,
                                 ),
@@ -195,10 +195,10 @@ class ProductCard extends StatelessWidget {
                           height: 32,
                           decoration: BoxDecoration(
                             color: inCart
-                                ? AppPalette.primary
+                                ? context.colors.primary
                                 : product.inStock
-                                    ? AppPalette.muted
-                                    : AppPalette.border,
+                                    ? context.colors.muted
+                                    : context.colors.border,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           alignment: Alignment.center,
@@ -209,8 +209,8 @@ class ProductCard extends StatelessWidget {
                             color: inCart
                                 ? Colors.white
                                 : product.inStock
-                                    ? AppPalette.foreground
-                                    : AppPalette.mutedForeground,
+                                    ? context.colors.foreground
+                                    : context.colors.mutedForeground,
                             size: 18,
                           ),
                         ),
@@ -226,15 +226,15 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  Widget _placeholder() {
+  Widget _placeholder(BuildContext context) {
     return Container(
       width: width,
       height: width * 0.85,
-      color: AppPalette.muted,
+      color: context.colors.muted,
       alignment: Alignment.center,
-      child: const Icon(
+      child: Icon(
         Icons.image_not_supported_outlined,
-        color: AppPalette.mutedForeground,
+        color: context.colors.mutedForeground,
         size: 32,
       ),
     );

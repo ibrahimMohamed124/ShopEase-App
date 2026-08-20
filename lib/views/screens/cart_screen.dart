@@ -31,25 +31,25 @@ class CartScreen extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.shopping_cart_outlined,
                       size: 72,
-                      color: AppPalette.mutedForeground,
+                      color: context.colors.mutedForeground,
                     ),
                     const SizedBox(height: 12),
-                    const Text(
+                    Text(
                       'Your cart is empty',
                       style: TextStyle(
-                        color: AppPalette.foreground,
+                        color: context.colors.foreground,
                         fontSize: 22,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
+                    Text(
                       'Add products from Home or Categories.',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: AppPalette.mutedForeground),
+                      style: TextStyle(color: context.colors.mutedForeground),
                     ),
                     const SizedBox(height: 18),
                     ElevatedButton(
@@ -74,9 +74,9 @@ class CartScreen extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: () => context.read<CartCubit>().clearCart(),
-                child: const Text(
+                child: Text(
                   'Clear',
-                  style: TextStyle(color: AppPalette.primary),
+                  style: TextStyle(color: context.colors.primary),
                 ),
               ),
             ],
@@ -103,10 +103,10 @@ class CartScreen extends StatelessWidget {
                                 width: 80,
                                 height: 80,
                                 fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) => const SizedBox(
+                                errorBuilder: (_, __, ___) => SizedBox(
                                   width: 80,
                                   height: 80,
-                                  child: ColoredBox(color: AppPalette.muted),
+                                  child: ColoredBox(color: context.colors.muted),
                                 ),
                               ),
                             ),
@@ -117,9 +117,9 @@ class CartScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     item.product.name,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontWeight: FontWeight.w600,
-                                      color: AppPalette.foreground,
+                                      color: context.colors.foreground,
                                     ),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
@@ -127,8 +127,8 @@ class CartScreen extends StatelessWidget {
                                   const SizedBox(height: 4),
                                   Text(
                                     '\$${item.product.price.toStringAsFixed(2)}',
-                                    style: const TextStyle(
-                                      color: AppPalette.primary,
+                                    style: TextStyle(
+                                      color: context.colors.primary,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -165,9 +165,9 @@ class CartScreen extends StatelessWidget {
                                         onPressed: () => context
                                             .read<CartCubit>()
                                             .removeFromCart(item.product.id),
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.delete_outline_rounded,
-                                          color: AppPalette.destructive,
+                                          color: context.colors.destructive,
                                           size: 20,
                                         ),
                                       ),
@@ -187,9 +187,9 @@ class CartScreen extends StatelessWidget {
               // Order summary
               Container(
                 padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-                decoration: const BoxDecoration(
-                  color: AppPalette.card,
-                  border: Border(top: BorderSide(color: AppPalette.border)),
+                decoration: BoxDecoration(
+                  color: context.colors.card,
+                  border: Border(top: BorderSide(color: context.colors.border)),
                 ),
                 child: Column(
                   children: [
@@ -203,7 +203,7 @@ class CartScreen extends StatelessWidget {
                           ? 'Free'
                           : '\$${shipping.toStringAsFixed(2)}',
                       valueColor:
-                          shipping == 0 ? AppPalette.success : null,
+                          shipping == 0 ? context.colors.success : null,
                     ),
                     const SizedBox(height: 6),
                     _SummaryRow(
@@ -213,13 +213,13 @@ class CartScreen extends StatelessWidget {
                     _SummaryRow(
                       label: 'Total',
                       value: '\$${total.toStringAsFixed(2)}',
-                      labelStyle: const TextStyle(
-                        color: AppPalette.foreground,
+                      labelStyle: TextStyle(
+                        color: context.colors.foreground,
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
                       ),
-                      valueStyle: const TextStyle(
-                        color: AppPalette.foreground,
+                      valueStyle: TextStyle(
+                        color: context.colors.foreground,
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
                       ),
@@ -257,10 +257,10 @@ class _QtyButton extends StatelessWidget {
         width: 28,
         height: 28,
         decoration: BoxDecoration(
-          color: AppPalette.muted,
+          color: context.colors.muted,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Icon(icon, size: 16, color: AppPalette.foreground),
+        child: Icon(icon, size: 16, color: context.colors.foreground),
       ),
     );
   }
@@ -289,14 +289,14 @@ class _SummaryRow extends StatelessWidget {
         Text(
           label,
           style: labelStyle ??
-              const TextStyle(
-                  color: AppPalette.mutedForeground, fontSize: 14),
+              TextStyle(
+                  color: context.colors.mutedForeground, fontSize: 14),
         ),
         Text(
           value,
           style: valueStyle ??
               TextStyle(
-                color: valueColor ?? AppPalette.foreground,
+                color: valueColor ?? context.colors.foreground,
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
               ),

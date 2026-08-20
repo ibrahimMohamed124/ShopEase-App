@@ -38,7 +38,7 @@ class CategoriesScreen extends StatelessWidget {
         }
 
         return Scaffold(
-          backgroundColor: AppPalette.background,
+          backgroundColor: context.colors.background,
           body: CustomScrollView(
             slivers: [
               // ── SliverAppBar ────────────────────────────────────────
@@ -46,22 +46,22 @@ class CategoriesScreen extends StatelessWidget {
                 expandedHeight: 120,
                 floating: false,
                 pinned: true,
-                backgroundColor: AppPalette.background,
+                backgroundColor: context.colors.background,
                 elevation: 0,
                 scrolledUnderElevation: 0,
                 flexibleSpace: FlexibleSpaceBar(
                   titlePadding:
                       const EdgeInsets.only(left: 20, bottom: 16),
-                  title: const Text(
+                  title: Text(
                     'Shop by Category',
                     style: TextStyle(
-                      color: AppPalette.foreground,
+                      color: context.colors.foreground,
                       fontWeight: FontWeight.w800,
                       fontSize: 22,
                     ),
                   ),
                   background: Container(
-                    color: AppPalette.background,
+                    color: context.colors.background,
                   ),
                 ),
                 actions: [
@@ -69,8 +69,8 @@ class CategoriesScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 16),
                     child: Text(
                       '${state.categories.length} categories',
-                      style: const TextStyle(
-                        color: AppPalette.mutedForeground,
+                      style: TextStyle(
+                        color: context.colors.mutedForeground,
                         fontSize: 13,
                       ),
                     ),
@@ -173,9 +173,9 @@ class _CategoryCardState extends State<_CategoryCard>
         scale: _scale,
         child: Container(
           decoration: BoxDecoration(
-            color: AppPalette.card,
+            color: context.colors.card,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: AppPalette.border, width: 1),
+            border: Border.all(color: context.colors.border, width: 1),
             boxShadow: [
               BoxShadow(
                 color: accent.withOpacity(0.10),
@@ -261,15 +261,15 @@ class _CategoryCardState extends State<_CategoryCard>
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                  color: AppPalette.card,
+                  color: context.colors.card,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         cat.name,
-                        style: const TextStyle(
-                          color: AppPalette.foreground,
+                        style: TextStyle(
+                          color: context.colors.foreground,
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
                         ),

@@ -52,7 +52,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
         titleAccent: 'Products',
         subtitle:
             'Explore thousands of products across all categories. Find exactly what you\'re looking for with smart search and personalized picks.',
-        accentColor: AppPalette.primary,
+        accentColor: context.colors.primary,
         illustration: _DiscoverIllustration(animation: _floatController),
       ),
       _OnboardingData(
@@ -60,7 +60,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
         titleAccent: 'Checkout',
         subtitle:
             'Pay with confidence using multiple secure payment methods. Your transactions are always encrypted and protected.',
-        accentColor: AppPalette.secondary,
+        accentColor: context.colors.secondary,
         illustration: _CheckoutIllustration(animation: _floatController),
       ),
       _OnboardingData(
@@ -104,7 +104,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     final isLast = _currentPage == _pages.length - 1;
 
     return Scaffold(
-      backgroundColor: AppPalette.background,
+      backgroundColor: context.colors.background,
       body: SafeArea(
         child: Column(
           children: [
@@ -209,15 +209,15 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                         onPressed: _finishOnboarding,
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 15),
-                          side: const BorderSide(color: AppPalette.border),
+                          side: BorderSide(color: context.colors.border),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
                         ),
-                        child: const Text(
+                        child: Text(
                           'I already have an account',
                           style: TextStyle(
-                            color: AppPalette.mutedForeground,
+                            color: context.colors.mutedForeground,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -248,10 +248,10 @@ class _TextContent extends StatelessWidget {
       children: [
         RichText(
           text: TextSpan(
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.w800,
-              color: AppPalette.foreground,
+              color: context.colors.foreground,
               height: 1.25,
             ),
             children: [
@@ -266,9 +266,9 @@ class _TextContent extends StatelessWidget {
         const SizedBox(height: 12),
         Text(
           data.subtitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 15,
-            color: AppPalette.mutedForeground,
+            color: context.colors.mutedForeground,
             height: 1.6,
           ),
         ),
@@ -302,7 +302,7 @@ class _ProgressDots extends StatelessWidget {
           height: 8,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(99),
-            color: isActive ? accentColor : AppPalette.border,
+            color: isActive ? accentColor : context.colors.border,
           ),
         );
       }),
@@ -398,7 +398,7 @@ class _DiscoverIllustration extends StatelessWidget {
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        AppPalette.primary.withOpacity(0.12),
+                        context.colors.primary.withOpacity(0.12),
                         Colors.transparent,
                       ],
                     ),
@@ -416,7 +416,7 @@ class _DiscoverIllustration extends StatelessWidget {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          AppPalette.secondary.withOpacity(0.8),
+                          context.colors.secondary.withOpacity(0.8),
                           const Color(0xFF9C8FFF),
                         ],
                       ),
@@ -437,7 +437,7 @@ class _DiscoverIllustration extends StatelessWidget {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          AppPalette.primary.withOpacity(0.75),
+                          context.colors.primary.withOpacity(0.75),
                           const Color(0xFFFF8E53),
                         ],
                       ),
@@ -475,7 +475,7 @@ class _DiscoverIllustration extends StatelessWidget {
                   right: 8,
                   child: _FloatingBadge(
                     icon: Icons.local_offer_rounded,
-                    iconColor: AppPalette.primary,
+                    iconColor: context.colors.primary,
                     label: '30% OFF',
                     sublabel: 'Limited time',
                   ),
@@ -490,12 +490,12 @@ class _DiscoverIllustration extends StatelessWidget {
                 Positioned(
                   bottom: 50,
                   right: 20,
-                  child: _Sparkle(color: AppPalette.secondary, size: 10),
+                  child: _Sparkle(color: context.colors.secondary, size: 10),
                 ),
-                const Positioned(
+                Positioned(
                   top: 38,
                   left: 132,
-                  child: _Sparkle(color: AppPalette.primary, size: 8),
+                  child: _Sparkle(color: context.colors.primary, size: 8),
                 ),
               ],
             ),
@@ -532,7 +532,7 @@ class _ProductCard extends StatelessWidget {
         gradient: gradient,
         boxShadow: [
           BoxShadow(
-            color: (isMain ? AppPalette.primary : gradient.colors.first)
+            color: (isMain ? context.colors.primary : gradient.colors.first)
                 .withOpacity(isMain ? 0.2 : 0.25),
             blurRadius: isMain ? 28 : 12,
             offset: const Offset(0, 12),
@@ -618,12 +618,12 @@ class _MainCardContent extends StatelessWidget {
                 height: 52,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  gradient: const LinearGradient(
-                    colors: [AppPalette.primary, Color(0xFFFF8E53)],
+                  gradient: LinearGradient(
+                    colors: [context.colors.primary, Color(0xFFFF8E53)],
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: AppPalette.primary.withOpacity(0.35),
+                      color: context.colors.primary.withOpacity(0.35),
                       blurRadius: 12,
                     ),
                   ],
@@ -649,7 +649,7 @@ class _MainCardContent extends StatelessWidget {
             height: 7,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
-              color: AppPalette.foreground.withOpacity(0.6),
+              color: context.colors.foreground.withOpacity(0.6),
             ),
           ),
           const SizedBox(height: 4),
@@ -658,7 +658,7 @@ class _MainCardContent extends StatelessWidget {
             height: 6,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(3),
-              color: AppPalette.mutedForeground.withOpacity(0.4),
+              color: context.colors.mutedForeground.withOpacity(0.4),
             ),
           ),
           const SizedBox(height: 8),
@@ -670,7 +670,7 @@ class _MainCardContent extends StatelessWidget {
                 height: 22,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(11),
-                  color: AppPalette.primary.withOpacity(0.9),
+                  color: context.colors.primary.withOpacity(0.9),
                 ),
                 child: const Center(
                   child: Text(
@@ -686,9 +686,9 @@ class _MainCardContent extends StatelessWidget {
               Container(
                 width: 26,
                 height: 26,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppPalette.primary,
+                  color: context.colors.primary,
                 ),
                 child: const Icon(Icons.add, color: Colors.white, size: 16),
               ),
@@ -728,7 +728,7 @@ class _CheckoutIllustration extends StatelessWidget {
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        AppPalette.secondary.withOpacity(0.12),
+                        context.colors.secondary.withOpacity(0.12),
                         Colors.transparent,
                       ],
                     ),
@@ -744,12 +744,12 @@ class _CheckoutIllustration extends StatelessWidget {
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                        color: AppPalette.secondary.withOpacity(0.18),
+                        color: context.colors.secondary.withOpacity(0.18),
                         blurRadius: 36,
                         offset: const Offset(0, 16),
                       ),
                     ],
-                    border: Border.all(color: AppPalette.border),
+                    border: Border.all(color: context.colors.border),
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(25),
@@ -758,10 +758,10 @@ class _CheckoutIllustration extends StatelessWidget {
                         // Header
                         Container(
                           height: 44,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
-                                AppPalette.secondary,
+                                context.colors.secondary,
                                 Color(0xFF9C8FFF),
                               ],
                             ),
@@ -801,11 +801,11 @@ class _CheckoutIllustration extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      const Text(
+                                      Text(
                                         'Order Summary',
                                         style: TextStyle(
                                           fontSize: 9,
-                                          color: AppPalette.mutedForeground,
+                                          color: context.colors.mutedForeground,
                                         ),
                                       ),
                                       const SizedBox(height: 8),
@@ -819,11 +819,11 @@ class _CheckoutIllustration extends StatelessWidget {
                                                   BorderRadius.circular(8),
                                               color: const Color(0xFFFFF0F0),
                                             ),
-                                            child: const Center(
+                                            child: Center(
                                               child: Icon(
                                                 Icons.inventory_2_rounded,
                                                 size: 14,
-                                                color: AppPalette.primary,
+                                                color: context.colors.primary,
                                               ),
                                             ),
                                           ),
@@ -841,7 +841,7 @@ class _CheckoutIllustration extends StatelessWidget {
                                                         BorderRadius.circular(
                                                           3,
                                                         ),
-                                                    color: AppPalette.foreground
+                                                    color: context.colors.foreground
                                                         .withOpacity(0.55),
                                                   ),
                                                 ),
@@ -854,8 +854,7 @@ class _CheckoutIllustration extends StatelessWidget {
                                                         BorderRadius.circular(
                                                           3,
                                                         ),
-                                                    color: AppPalette
-                                                        .mutedForeground
+                                                    color: context.colors.mutedForeground
                                                         .withOpacity(0.4),
                                                   ),
                                                 ),
@@ -869,20 +868,20 @@ class _CheckoutIllustration extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          const Text(
+                                          Text(
                                             'Total',
                                             style: TextStyle(
                                               fontSize: 10,
                                               fontWeight: FontWeight.w600,
-                                              color: AppPalette.foreground,
+                                              color: context.colors.foreground,
                                             ),
                                           ),
-                                          const Text(
+                                          Text(
                                             '\$89.99',
                                             style: TextStyle(
                                               fontSize: 11,
                                               fontWeight: FontWeight.w700,
-                                              color: AppPalette.primary,
+                                              color: context.colors.primary,
                                             ),
                                           ),
                                         ],
@@ -897,9 +896,9 @@ class _CheckoutIllustration extends StatelessWidget {
                                   padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
-                                    gradient: const LinearGradient(
+                                    gradient: LinearGradient(
                                       colors: [
-                                        AppPalette.secondary,
+                                        context.colors.secondary,
                                         Color(0xFF9C8FFF),
                                       ],
                                     ),
@@ -990,7 +989,7 @@ class _CheckoutIllustration extends StatelessWidget {
                   bottom: 80,
                   child: _FloatingBadge(
                     icon: Icons.verified_rounded,
-                    iconColor: AppPalette.secondary,
+                    iconColor: context.colors.secondary,
                     label: '100% Safe',
                     sublabel: 'Guaranteed',
                   ),
@@ -1005,7 +1004,7 @@ class _CheckoutIllustration extends StatelessWidget {
                 Positioned(
                   bottom: 32,
                   right: 18,
-                  child: _Sparkle(color: AppPalette.primary, size: 10),
+                  child: _Sparkle(color: context.colors.primary, size: 10),
                 ),
               ],
             ),
@@ -1087,7 +1086,7 @@ class _DeliveryIllustration extends StatelessWidget {
                     height: 48,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: AppPalette.border.withOpacity(0.5),
+                      color: context.colors.border.withOpacity(0.5),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1148,7 +1147,9 @@ class _DeliveryIllustration extends StatelessWidget {
                   child: SizedBox(
                     width: 28,
                     height: 34,
-                    child: CustomPaint(painter: _LocationPinPainter()),
+                    child: CustomPaint(
+                      painter: _LocationPinPainter(context.colors.primary),
+                    ),
                   ),
                 ),
 
@@ -1161,7 +1162,7 @@ class _DeliveryIllustration extends StatelessWidget {
                 Positioned(
                   bottom: 100,
                   left: 18,
-                  child: _Sparkle(color: AppPalette.secondary, size: 9),
+                  child: _Sparkle(color: context.colors.secondary, size: 9),
                 ),
               ],
             ),
@@ -1199,7 +1200,7 @@ class _TruckWidget extends StatelessWidget {
                   height: 38,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
-                    color: AppPalette.primary,
+                    color: context.colors.primary,
                   ),
                   child: const Center(
                     child: Icon(Icons.star_rounded, color: Colors.white, size: 20),
@@ -1285,9 +1286,9 @@ class _Wheel extends StatelessWidget {
             child: Container(
               width: 4,
               height: 4,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppPalette.muted,
+                color: context.colors.muted,
               ),
             ),
           ),
@@ -1317,10 +1318,10 @@ class _HouseWidget extends StatelessWidget {
                   bottomLeft: Radius.circular(6),
                   bottomRight: Radius.circular(6),
                 ),
-                gradient: const LinearGradient(
+                gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [AppPalette.secondary, Color(0xFF8B85FF)],
+                  colors: [context.colors.secondary, Color(0xFF8B85FF)],
                 ),
               ),
               child: Column(
@@ -1383,10 +1384,10 @@ class _DeliveryProgressBar extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(3),
-          child: const LinearProgressIndicator(
+          child: LinearProgressIndicator(
             value: 0.65,
             minHeight: 5,
-            backgroundColor: AppPalette.border,
+            backgroundColor: context.colors.border,
             valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF22C55E)),
           ),
         ),
@@ -1410,9 +1411,9 @@ class _DeliveryProgressBar extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            const Text(
+            Text(
               'Delivered',
-              style: TextStyle(fontSize: 9, color: AppPalette.mutedForeground),
+              style: TextStyle(fontSize: 9, color: context.colors.mutedForeground),
             ),
           ],
         ),
@@ -1472,17 +1473,17 @@ class _FloatingBadge extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 9.5,
                   fontWeight: FontWeight.w700,
-                  color: AppPalette.foreground,
+                  color: context.colors.foreground,
                 ),
               ),
               Text(
                 sublabel,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 8.5,
-                  color: AppPalette.mutedForeground,
+                  color: context.colors.mutedForeground,
                 ),
               ),
             ],
@@ -1525,10 +1526,14 @@ class _RoofPainter extends CustomPainter {
 }
 
 class _LocationPinPainter extends CustomPainter {
+  _LocationPinPainter(this.color);
+
+  final Color color;
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = AppPalette.primary
+      ..color = color
       ..style = PaintingStyle.fill;
     final path = Path()
       ..addOval(Rect.fromCircle(

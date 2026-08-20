@@ -32,7 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: AppPalette.background,
+          backgroundColor: context.colors.background,
           body: SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -51,19 +51,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     const SizedBox(height: 28),
 
-                    const Text(
+                    Text(
                       'Create account',
                       style: TextStyle(
-                        color: AppPalette.foreground,
+                        color: context.colors.foreground,
                         fontSize: 30,
                         fontWeight: FontWeight.w800,
                         letterSpacing: -0.5,
                       ),
                     ),
                     const SizedBox(height: 6),
-                    const Text(
+                    Text(
                       'Join ShopEase and start shopping',
-                      style: TextStyle(color: AppPalette.mutedForeground),
+                      style: TextStyle(color: context.colors.mutedForeground),
                     ),
                     const SizedBox(height: 36),
 
@@ -72,15 +72,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         width: double.infinity,
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: AppPalette.destructive.withOpacity(0.1),
+                          color: context.colors.destructive.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                              color: AppPalette.destructive.withOpacity(0.3)),
+                              color: context.colors.destructive.withOpacity(0.3)),
                         ),
                         child: Text(
                           state.error!,
-                          style: const TextStyle(
-                              color: AppPalette.destructive, fontSize: 13),
+                          style: TextStyle(
+                              color: context.colors.destructive, fontSize: 13),
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -150,9 +150,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           'Already have an account?',
-                          style: TextStyle(color: AppPalette.mutedForeground),
+                          style: TextStyle(color: context.colors.mutedForeground),
                         ),
                         TextButton(
                           onPressed: state.isLoading

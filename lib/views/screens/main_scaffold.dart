@@ -73,7 +73,7 @@ class _MainScaffoldState extends State<MainScaffold> {
             (states) => IconThemeData(
               size: 22,
               color: states.contains(WidgetState.selected)
-                  ? AppPalette.primary
+                  ? context.colors.primary
                   : null,
             ),
           ),
@@ -109,7 +109,7 @@ class _MainScaffoldState extends State<MainScaffold> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 5, vertical: 2),
                         decoration: BoxDecoration(
-                          color: AppPalette.primary,
+                          color: context.colors.primary,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         constraints: const BoxConstraints(minWidth: 18),

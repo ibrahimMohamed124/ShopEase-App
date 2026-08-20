@@ -78,9 +78,9 @@ class _OrderDetailsView extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppPalette.card,
+            color: context.colors.card,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppPalette.border),
+            border: Border.all(color: context.colors.border),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,8 +91,8 @@ class _OrderDetailsView extends StatelessWidget {
                   _StatusBadge(status: order.status),
                   Text(
                     'Placed ${DateFormatter.date(order.date)}',
-                    style: const TextStyle(
-                        color: AppPalette.mutedForeground, fontSize: 12.5),
+                    style: TextStyle(
+                        color: context.colors.mutedForeground, fontSize: 12.5),
                   ),
                 ],
               ),
@@ -109,9 +109,9 @@ class _OrderDetailsView extends StatelessWidget {
         const _SectionHeader(title: 'ITEMS'),
         Container(
           decoration: BoxDecoration(
-            color: AppPalette.card,
+            color: context.colors.card,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppPalette.border),
+            border: Border.all(color: context.colors.border),
           ),
           padding: const EdgeInsets.all(14),
           child: Column(
@@ -121,9 +121,9 @@ class _OrderDetailsView extends StatelessWidget {
                 _OrderItemRow(item: order.items[i]),
               ],
               if (order.items.isEmpty)
-                const Text(
+                Text(
                   'No item details available for this order.',
-                  style: TextStyle(color: AppPalette.mutedForeground),
+                  style: TextStyle(color: context.colors.mutedForeground),
                 ),
             ],
           ),
@@ -135,9 +135,9 @@ class _OrderDetailsView extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
-            color: AppPalette.card,
+            color: context.colors.card,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppPalette.border),
+            border: Border.all(color: context.colors.border),
           ),
           child: Column(
             children: [
@@ -165,22 +165,22 @@ class _OrderDetailsView extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: AppPalette.card,
+              color: context.colors.card,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppPalette.border),
+              border: Border.all(color: context.colors.border),
             ),
             child: Row(
               children: [
                 Icon(_paymentIcon(order.paymentMethod!.type),
-                    color: AppPalette.mutedForeground, size: 20),
+                    color: context.colors.mutedForeground, size: 20),
                 const SizedBox(width: 10),
                 Text(
                   order.paymentMethod!.isCard &&
                           order.paymentMethod!.lastFour != null
                       ? '${order.paymentMethod!.displayName} •••• ${order.paymentMethod!.lastFour}'
                       : order.paymentMethod!.displayName,
-                  style: const TextStyle(
-                      color: AppPalette.foreground,
+                  style: TextStyle(
+                      color: context.colors.foreground,
                       fontWeight: FontWeight.w600,
                       fontSize: 13.5),
                 ),
@@ -195,9 +195,9 @@ class _OrderDetailsView extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
-            color: AppPalette.card,
+            color: context.colors.card,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppPalette.border),
+            border: Border.all(color: context.colors.border),
           ),
           child: _DetailRow(
             label: 'Total',
@@ -210,8 +210,8 @@ class _OrderDetailsView extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             state.error!,
-            style: const TextStyle(
-                color: AppPalette.destructive, fontSize: 12.5),
+            style: TextStyle(
+                color: context.colors.destructive, fontSize: 12.5),
           ),
         ],
       ],
@@ -248,15 +248,15 @@ class _BottomActions extends StatelessWidget {
           child: OutlinedButton(
             onPressed: isCancelling ? null : () => _confirmCancel(context),
             style: OutlinedButton.styleFrom(
-              foregroundColor: AppPalette.destructive,
-              side: const BorderSide(color: AppPalette.destructive),
+              foregroundColor: context.colors.destructive,
+              side: BorderSide(color: context.colors.destructive),
             ),
             child: isCancelling
-                ? const SizedBox(
+                ? SizedBox(
                     width: 16,
                     height: 16,
                     child: CircularProgressIndicator(
-                        strokeWidth: 2, color: AppPalette.destructive),
+                        strokeWidth: 2, color: context.colors.destructive),
                   )
                 : const Text('Cancel Order'),
           ),
@@ -311,12 +311,12 @@ class _BottomActions extends StatelessWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: AppPalette.card,
-        title: const Text('Cancel Order',
-            style: TextStyle(color: AppPalette.foreground)),
+        backgroundColor: context.colors.card,
+        title: Text('Cancel Order',
+            style: TextStyle(color: context.colors.foreground)),
         content: Text(
           'Are you sure you want to cancel order #${order.id}? This cannot be undone.',
-          style: const TextStyle(color: AppPalette.mutedForeground),
+          style: TextStyle(color: context.colors.mutedForeground),
         ),
         actions: [
           TextButton(
@@ -325,8 +325,8 @@ class _BottomActions extends StatelessWidget {
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Cancel Order',
-                style: TextStyle(color: AppPalette.destructive)),
+            child: Text('Cancel Order',
+                style: TextStyle(color: context.colors.destructive)),
           ),
         ],
       ),
@@ -400,8 +400,8 @@ class _OrderProgress extends StatelessWidget {
               child: Container(
                 height: 2,
                 color: i <= currentIndex
-                    ? AppPalette.primary
-                    : AppPalette.border,
+                    ? context.colors.primary
+                    : context.colors.border,
               ),
             ),
           Column(
@@ -412,8 +412,8 @@ class _OrderProgress extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: i <= currentIndex
-                      ? AppPalette.primary
-                      : AppPalette.muted,
+                      ? context.colors.primary
+                      : context.colors.muted,
                 ),
                 alignment: Alignment.center,
                 child: i < currentIndex
@@ -426,7 +426,7 @@ class _OrderProgress extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                           color: i <= currentIndex
                               ? Colors.white
-                              : AppPalette.mutedForeground,
+                              : context.colors.mutedForeground,
                         ),
                       ),
               ),
@@ -437,8 +437,8 @@ class _OrderProgress extends StatelessWidget {
                   fontSize: 10.5,
                   fontWeight: FontWeight.w600,
                   color: i <= currentIndex
-                      ? AppPalette.foreground
-                      : AppPalette.mutedForeground,
+                      ? context.colors.foreground
+                      : context.colors.mutedForeground,
                 ),
               ),
             ],
@@ -461,7 +461,7 @@ class _OrderItemRow extends StatelessWidget {
           width: 48,
           height: 48,
           decoration: BoxDecoration(
-            color: AppPalette.muted,
+            color: context.colors.muted,
             borderRadius: BorderRadius.circular(10),
           ),
           clipBehavior: Clip.antiAlias,
@@ -469,13 +469,13 @@ class _OrderItemRow extends StatelessWidget {
               ? Image.network(
                   item.imageUrl,
                   fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => const Icon(
+                  errorBuilder: (_, __, ___) => Icon(
                       Icons.image_not_supported_outlined,
                       size: 18,
-                      color: AppPalette.mutedForeground),
+                      color: context.colors.mutedForeground),
                 )
-              : const Icon(Icons.image_not_supported_outlined,
-                  size: 18, color: AppPalette.mutedForeground),
+              : Icon(Icons.image_not_supported_outlined,
+                  size: 18, color: context.colors.mutedForeground),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -485,20 +485,20 @@ class _OrderItemRow extends StatelessWidget {
               Text(item.name,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      color: AppPalette.foreground,
+                  style: TextStyle(
+                      color: context.colors.foreground,
                       fontWeight: FontWeight.w600,
                       fontSize: 13.5)),
               const SizedBox(height: 2),
               Text('Qty ${item.quantity} • \$${item.price.toStringAsFixed(2)} each',
-                  style: const TextStyle(
-                      color: AppPalette.mutedForeground, fontSize: 12)),
+                  style: TextStyle(
+                      color: context.colors.mutedForeground, fontSize: 12)),
             ],
           ),
         ),
         Text('\$${item.subtotal.toStringAsFixed(2)}',
-            style: const TextStyle(
-                color: AppPalette.foreground,
+            style: TextStyle(
+                color: context.colors.foreground,
                 fontWeight: FontWeight.w700,
                 fontSize: 13.5)),
       ],
@@ -525,12 +525,12 @@ class _DetailRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label,
-              style: const TextStyle(
-                  color: AppPalette.mutedForeground, fontSize: 13)),
+              style: TextStyle(
+                  color: context.colors.mutedForeground, fontSize: 13)),
           Text(
             value,
             style: TextStyle(
-              color: AppPalette.foreground,
+              color: context.colors.foreground,
               fontWeight: emphasize ? FontWeight.w700 : FontWeight.w600,
               fontSize: emphasize ? 16 : 13,
             ),
@@ -551,8 +551,8 @@ class _SectionHeader extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10, top: 4),
       child: Text(
         title,
-        style: const TextStyle(
-          color: AppPalette.mutedForeground,
+        style: TextStyle(
+          color: context.colors.mutedForeground,
           fontWeight: FontWeight.w700,
           fontSize: 12,
           letterSpacing: 0.8,
@@ -569,10 +569,10 @@ class _StatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (label, color) = switch (status) {
-      OrderStatus.processing => ('Processing', AppPalette.star),
-      OrderStatus.shipped => ('Shipped', AppPalette.secondary),
-      OrderStatus.delivered => ('Delivered', AppPalette.success),
-      OrderStatus.cancelled => ('Cancelled', AppPalette.destructive),
+      OrderStatus.processing => ('Processing', context.colors.star),
+      OrderStatus.shipped => ('Shipped', context.colors.secondary),
+      OrderStatus.delivered => ('Delivered', context.colors.success),
+      OrderStatus.cancelled => ('Cancelled', context.colors.destructive),
     };
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),

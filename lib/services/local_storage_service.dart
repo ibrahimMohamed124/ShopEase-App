@@ -8,6 +8,7 @@ class LocalStorageService {
   static const String _userStorageKey = '@shopease_user';
   static const String _cartStorageKey = '@shopease_cart';
   static const String _onboardingSeenKey = '@shopease_onboarding_seen';
+  static const String _themeModeKey = '@shopease_theme_mode';
 
   Future<void> saveUser(AppUser user) async {
     final prefs = await SharedPreferences.getInstance();
@@ -71,5 +72,15 @@ class LocalStorageService {
   Future<void> setOnboardingSeen() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_onboardingSeenKey, true);
+  }
+
+  Future<String?> getThemeMode() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_themeModeKey);
+  }
+
+  Future<void> saveThemeMode(String mode) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_themeModeKey, mode);
   }
 }

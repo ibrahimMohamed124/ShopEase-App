@@ -35,21 +35,21 @@ class WishlistScreen extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.favorite_border_rounded,
-                            size: 72, color: AppPalette.mutedForeground),
+                        Icon(Icons.favorite_border_rounded,
+                            size: 72, color: context.colors.mutedForeground),
                         const SizedBox(height: 12),
-                        const Text(
+                        Text(
                           'Your wishlist is empty',
                           style: TextStyle(
-                              color: AppPalette.foreground,
+                              color: context.colors.foreground,
                               fontSize: 22,
                               fontWeight: FontWeight.w700),
                         ),
                         const SizedBox(height: 8),
-                        const Text(
+                        Text(
                           'Save items you love and find them here.',
                           textAlign: TextAlign.center,
-                          style: TextStyle(color: AppPalette.mutedForeground),
+                          style: TextStyle(color: context.colors.mutedForeground),
                         ),
                         const SizedBox(height: 18),
                         ElevatedButton(
@@ -70,7 +70,7 @@ class WishlistScreen extends StatelessWidget {
                   TextButton(
                     onPressed: () => context.read<WishlistCubit>().clearAll(),
                     style: TextButton.styleFrom(
-                        foregroundColor: AppPalette.destructive),
+                        foregroundColor: context.colors.destructive),
                     child: const Text('Clear All'),
                   ),
                 ],
@@ -103,8 +103,8 @@ class WishlistScreen extends StatelessWidget {
                             child: Container(
                               width: 28,
                               height: 28,
-                              decoration: const BoxDecoration(
-                                  color: AppPalette.primary,
+                              decoration: BoxDecoration(
+                                  color: context.colors.primary,
                                   shape: BoxShape.circle),
                               alignment: Alignment.center,
                               child: const Icon(Icons.favorite_rounded,

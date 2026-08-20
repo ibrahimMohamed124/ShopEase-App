@@ -66,25 +66,25 @@ class _TrackOrderView extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: AppPalette.card,
+                    color: context.colors.card,
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: AppPalette.border),
+                    border: Border.all(color: context.colors.border),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.local_shipping_outlined,
-                              color: AppPalette.primary, size: 22),
+                          Icon(Icons.local_shipping_outlined,
+                              color: context.colors.primary, size: 22),
                           const SizedBox(width: 10),
                           Expanded(
                             child: Text(
                               tracking.estimatedDelivery != null
                                   ? 'Arriving by ${DateFormatter.date(tracking.estimatedDelivery)}'
                                   : 'On the way',
-                              style: const TextStyle(
-                                color: AppPalette.foreground,
+                              style: TextStyle(
+                                color: context.colors.foreground,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 15,
                               ),
@@ -126,9 +126,9 @@ class _TrackOrderView extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.fromLTRB(16, 18, 16, 6),
                     decoration: BoxDecoration(
-                      color: AppPalette.card,
+                      color: context.colors.card,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: AppPalette.border),
+                      border: Border.all(color: context.colors.border),
                     ),
                     child: Column(
                       children: [
@@ -164,16 +164,16 @@ class _InfoRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 16, color: AppPalette.mutedForeground),
+        Icon(icon, size: 16, color: context.colors.mutedForeground),
         const SizedBox(width: 8),
         Text('$label: ',
-            style: const TextStyle(
-                color: AppPalette.mutedForeground, fontSize: 12.5)),
+            style: TextStyle(
+                color: context.colors.mutedForeground, fontSize: 12.5)),
         Expanded(
           child: Text(
             value,
-            style: const TextStyle(
-                color: AppPalette.foreground,
+            style: TextStyle(
+                color: context.colors.foreground,
                 fontWeight: FontWeight.w600,
                 fontSize: 12.5),
             overflow: TextOverflow.ellipsis,
@@ -195,8 +195,8 @@ class _TimelineStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = step.isCompleted || step.isCurrent
-        ? AppPalette.primary
-        : AppPalette.border;
+        ? context.colors.primary
+        : context.colors.border;
 
     return IntrinsicHeight(
       child: Row(
@@ -210,15 +210,15 @@ class _TimelineStep extends StatelessWidget {
                 margin: const EdgeInsets.only(top: 3),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: step.isCompleted ? color : AppPalette.card,
+                  color: step.isCompleted ? color : context.colors.card,
                   border: Border.all(color: color, width: 2),
                 ),
                 child: step.isCurrent
                     ? Container(
                         margin: const EdgeInsets.all(3),
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: AppPalette.primary,
+                          color: context.colors.primary,
                         ),
                       )
                     : null,
@@ -228,8 +228,8 @@ class _TimelineStep extends StatelessWidget {
                   child: Container(
                     width: 2,
                     color: step.isCompleted
-                        ? AppPalette.primary
-                        : AppPalette.border,
+                        ? context.colors.primary
+                        : context.colors.border,
                   ),
                 ),
             ],
@@ -245,8 +245,8 @@ class _TimelineStep extends StatelessWidget {
                     step.title,
                     style: TextStyle(
                       color: step.isCompleted || step.isCurrent
-                          ? AppPalette.foreground
-                          : AppPalette.mutedForeground,
+                          ? context.colors.foreground
+                          : context.colors.mutedForeground,
                       fontWeight: step.isCurrent
                           ? FontWeight.w700
                           : FontWeight.w600,
@@ -257,16 +257,16 @@ class _TimelineStep extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       step.description!,
-                      style: const TextStyle(
-                          color: AppPalette.mutedForeground, fontSize: 12),
+                      style: TextStyle(
+                          color: context.colors.mutedForeground, fontSize: 12),
                     ),
                   ],
                   if (step.timestamp != null) ...[
                     const SizedBox(height: 2),
                     Text(
                       DateFormatter.dateTime(step.timestamp),
-                      style: const TextStyle(
-                          color: AppPalette.mutedForeground, fontSize: 11.5),
+                      style: TextStyle(
+                          color: context.colors.mutedForeground, fontSize: 11.5),
                     ),
                   ],
                 ],

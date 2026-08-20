@@ -15,24 +15,24 @@ class NotFoundScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(
+              Icon(
                 Icons.travel_explore_rounded,
                 size: 72,
-                color: AppPalette.mutedForeground,
+                color: context.colors.mutedForeground,
               ),
               const SizedBox(height: 12),
-              const Text(
+              Text(
                 'This screen does not exist.',
                 style: TextStyle(
-                  color: AppPalette.foreground,
+                  color: context.colors.foreground,
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               const SizedBox(height: 8),
-              const Text(
+              Text(
                 'Let\'s get you back to shopping.',
-                style: TextStyle(color: AppPalette.mutedForeground),
+                style: TextStyle(color: context.colors.mutedForeground),
               ),
               const SizedBox(height: 14),
               ElevatedButton(

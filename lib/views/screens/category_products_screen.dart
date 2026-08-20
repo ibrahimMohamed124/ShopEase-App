@@ -121,7 +121,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
               final products = _applyFilters(raw);
 
               return Scaffold(
-                backgroundColor: AppPalette.background,
+                backgroundColor: context.colors.background,
                 body: NestedScrollView(
                   headerSliverBuilder: (context, _) => [
                     _buildAppBar(context, raw.length),
@@ -260,13 +260,13 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
         onChanged: (v) => setState(() => _searchQuery = v),
         decoration: InputDecoration(
           hintText: 'Search in ${widget.category.name}...',
-          hintStyle: const TextStyle(
-            color: AppPalette.mutedForeground,
+          hintStyle: TextStyle(
+            color: context.colors.mutedForeground,
             fontSize: 14,
           ),
-          prefixIcon: const Icon(
+          prefixIcon: Icon(
             Icons.search_rounded,
-            color: AppPalette.mutedForeground,
+            color: context.colors.mutedForeground,
             size: 20,
           ),
           suffixIcon: _searchQuery.isNotEmpty
@@ -275,9 +275,9 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                     _searchCtrl.clear();
                     setState(() => _searchQuery = '');
                   },
-                  child: const Icon(
+                  child: Icon(
                     Icons.close_rounded,
-                    color: AppPalette.mutedForeground,
+                    color: context.colors.mutedForeground,
                     size: 18,
                   ),
                 )
@@ -285,14 +285,14 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
           contentPadding: const EdgeInsets.symmetric(
               horizontal: 16, vertical: 12),
           filled: true,
-          fillColor: AppPalette.card,
+          fillColor: context.colors.card,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(14),
-            borderSide: const BorderSide(color: AppPalette.border),
+            borderSide: BorderSide(color: context.colors.border),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(14),
-            borderSide: const BorderSide(color: AppPalette.border),
+            borderSide: BorderSide(color: context.colors.border),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(14),
@@ -362,10 +362,10 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
               padding: const EdgeInsets.symmetric(
                   horizontal: 16, vertical: 6),
               decoration: BoxDecoration(
-                color: isSelected ? _accent : AppPalette.card,
+                color: isSelected ? _accent : context.colors.card,
                 borderRadius: BorderRadius.circular(22),
                 border: Border.all(
-                  color: isSelected ? _accent : AppPalette.border,
+                  color: isSelected ? _accent : context.colors.border,
                   width: 1.5,
                 ),
                 boxShadow: isSelected
@@ -383,7 +383,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                 style: TextStyle(
                   color: isSelected
                       ? Colors.white
-                      : AppPalette.foreground,
+                      : context.colors.foreground,
                   fontWeight: FontWeight.w600,
                   fontSize: 13,
                 ),
@@ -416,10 +416,10 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
               padding: const EdgeInsets.symmetric(
                   horizontal: 16, vertical: 6),
               decoration: BoxDecoration(
-                color: isSelected ? _accent : AppPalette.card,
+                color: isSelected ? _accent : context.colors.card,
                 borderRadius: BorderRadius.circular(22),
                 border: Border.all(
-                  color: isSelected ? _accent : AppPalette.border,
+                  color: isSelected ? _accent : context.colors.border,
                   width: 1.5,
                 ),
                 boxShadow: isSelected
@@ -437,7 +437,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                 style: TextStyle(
                   color: isSelected
                       ? Colors.white
-                      : AppPalette.foreground,
+                      : context.colors.foreground,
                   fontWeight: FontWeight.w600,
                   fontSize: 13,
                 ),
@@ -458,8 +458,8 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
         children: [
           Text(
             '$count results',
-            style: const TextStyle(
-              color: AppPalette.mutedForeground,
+            style: TextStyle(
+              color: context.colors.mutedForeground,
               fontSize: 13,
             ),
           ),
@@ -471,9 +471,9 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
               padding: const EdgeInsets.symmetric(
                   horizontal: 12, vertical: 7),
               decoration: BoxDecoration(
-                color: AppPalette.card,
+                color: context.colors.card,
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: AppPalette.border),
+                border: Border.all(color: context.colors.border),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -502,10 +502,10 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
               padding: const EdgeInsets.symmetric(
                   horizontal: 12, vertical: 7),
               decoration: BoxDecoration(
-                color: _showFilters ? _accent : AppPalette.card,
+                color: _showFilters ? _accent : context.colors.card,
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
-                  color: _showFilters ? _accent : AppPalette.border,
+                  color: _showFilters ? _accent : context.colors.border,
                 ),
               ),
               child: Row(
@@ -544,9 +544,9 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppPalette.card,
+        color: context.colors.card,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppPalette.border),
+        border: Border.all(color: context.colors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -554,10 +554,10 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
           // Price range
           Row(
             children: [
-              const Text(
+              Text(
                 'Price Range',
                 style: TextStyle(
-                  color: AppPalette.foreground,
+                  color: context.colors.foreground,
                   fontWeight: FontWeight.w700,
                   fontSize: 14,
                 ),
@@ -565,8 +565,8 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
               const Spacer(),
               Text(
                 '\$${_priceRange.start.toInt()} – \$${_priceRange.end.toInt()}',
-                style: const TextStyle(
-                  color: AppPalette.mutedForeground,
+                style: TextStyle(
+                  color: context.colors.mutedForeground,
                   fontSize: 13,
                 ),
               ),
@@ -576,7 +576,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
             data: SliderThemeData(
               activeTrackColor: _accent,
               thumbColor: _accent,
-              inactiveTrackColor: AppPalette.border,
+              inactiveTrackColor: context.colors.border,
               overlayColor: _accent.withOpacity(0.15),
               trackHeight: 3,
               rangeThumbShape: const RoundRangeSliderThumbShape(
@@ -596,10 +596,10 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
           // In-stock toggle
           Row(
             children: [
-              const Text(
+              Text(
                 'In Stock Only',
                 style: TextStyle(
-                  color: AppPalette.foreground,
+                  color: context.colors.foreground,
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
                 ),
@@ -650,7 +650,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
   void _showSortSheet() {
     showModalBottomSheet(
       context: context,
-      backgroundColor: AppPalette.card,
+      backgroundColor: context.colors.card,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -664,12 +664,12 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: AppPalette.border,
+                color: context.colors.border,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
             const SizedBox(height: 12),
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Align(
                 alignment: Alignment.centerLeft,
@@ -678,7 +678,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w700,
-                    color: AppPalette.foreground,
+                    color: context.colors.foreground,
                   ),
                 ),
               ),
@@ -695,7 +695,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                   isSelected
                       ? Icons.radio_button_checked_rounded
                       : Icons.radio_button_off_rounded,
-                  color: isSelected ? _accent : AppPalette.mutedForeground,
+                  color: isSelected ? _accent : context.colors.mutedForeground,
                   size: 22,
                 ),
                 title: Text(
@@ -703,7 +703,7 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                   style: TextStyle(
                     color: isSelected
                         ? _accent
-                        : AppPalette.foreground,
+                        : context.colors.foreground,
                     fontWeight: isSelected
                         ? FontWeight.w600
                         : FontWeight.w400,
@@ -766,19 +766,19 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
             color: _accent.withOpacity(0.35),
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             'No products found',
             style: TextStyle(
-              color: AppPalette.foreground,
+              color: context.colors.foreground,
               fontSize: 17,
               fontWeight: FontWeight.w600,
             ),
           ),
           const SizedBox(height: 6),
-          const Text(
+          Text(
             'Try adjusting your search or filters',
             style: TextStyle(
-              color: AppPalette.mutedForeground,
+              color: context.colors.mutedForeground,
               fontSize: 13,
             ),
           ),

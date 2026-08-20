@@ -5,6 +5,7 @@ import 'package:shopease_mobile/cubits/auth/auth_cubit.dart';
 import 'package:shopease_mobile/cubits/cart/cart_cubit.dart';
 import 'package:shopease_mobile/core/routes/routes.dart';
 import 'package:shopease_mobile/core/theme/app_theme.dart';
+import 'package:shopease_mobile/controllers/theme_controller.dart';
 import 'package:shopease_mobile/views/widgets/loading_state.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -42,15 +43,15 @@ class ProfileScreen extends StatelessWidget {
                       width: 96,
                       height: 96,
                       decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [AppPalette.primary, AppPalette.secondary],
+                        gradient: LinearGradient(
+                          colors: [context.colors.primary, context.colors.secondary],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: AppPalette.primary.withOpacity(0.3),
+                            color: context.colors.primary.withOpacity(0.3),
                             blurRadius: 20,
                             offset: const Offset(0, 8),
                           ),
@@ -67,7 +68,6 @@ class ProfileScreen extends StatelessWidget {
                     const Text(
                       'Sign in to your account',
                       style: TextStyle(
-                        color: AppPalette.foreground,
                         fontSize: 22,
                         fontWeight: FontWeight.w700,
                       ),
@@ -77,7 +77,6 @@ class ProfileScreen extends StatelessWidget {
                       'Access your orders, saved items,\nand exclusive deals.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: AppPalette.mutedForeground,
                         height: 1.5,
                       ),
                     ),
@@ -97,6 +96,8 @@ class ProfileScreen extends StatelessWidget {
                         child: const Text('Create Account'),
                       ),
                     ),
+                    const SizedBox(height: 20),
+                    const _ThemeModeTile(),
                   ],
                 ),
               ),
@@ -119,9 +120,9 @@ class ProfileScreen extends StatelessWidget {
                       bottomRight: Radius.circular(36),
                     ),
                     child: Container(
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [AppPalette.primary, AppPalette.secondary],
+                        colors: [context.colors.primary, context.colors.secondary],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
@@ -210,6 +211,8 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 12),
+                      _ThemeModeTile(),
+                      const SizedBox(height: 12),
                       _ProfileCard(
                         children: [
                           _ProfileTile(
@@ -249,8 +252,8 @@ class ProfileScreen extends StatelessWidget {
                           _ProfileTile(
                             icon: Icons.logout_rounded,
                             label: 'Sign Out',
-                            labelColor: AppPalette.destructive,
-                            iconColor: AppPalette.destructive,
+                            labelColor: context.colors.destructive,
+                            iconColor: context.colors.destructive,
                             onTap: () async {
                               await context.read<AuthCubit>().logout();
                             },
@@ -317,13 +320,13 @@ class _ProfileTile extends StatelessWidget {
       onTap: onTap,
       leading: Icon(
         icon,
-        color: iconColor ?? AppPalette.foreground,
+        color: iconColor ?? Theme.of(context).colorScheme.onSurface,
         size: 22,
       ),
       title: Text(
         label,
         style: TextStyle(
-          color: labelColor ?? AppPalette.foreground,
+          color: labelColor ?? Theme.of(context).colorScheme.onSurface,
           fontSize: 15,
           fontWeight: FontWeight.w500,
         ),
@@ -333,7 +336,7 @@ class _ProfileTile extends StatelessWidget {
               padding:
                   const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               decoration: BoxDecoration(
-                color: AppPalette.primary,
+                color: context.colors.primary,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
@@ -345,8 +348,115 @@ class _ProfileTile extends StatelessWidget {
                 ),
               ),
             )
-          : const Icon(Icons.chevron_right_rounded,
-              color: AppPalette.mutedForeground),
+          : Icon(Icons.chevron_right_rounded,
+              color: context.colors.mutedForeground),
     );
+  }
+}
+
+class _ThemeModeTile extends StatelessWidget {
+  const _ThemeModeTile();
+
+  String _label(ThemeMode mode) {
+    switch (mode) {
+      case ThemeMode.light:
+        return 'Light';
+      case ThemeMode.dark:
+        return 'Dark';
+      case ThemeMode.system:
+        return 'System default';
+    }
+  }
+
+  IconData _icon(ThemeMode mode) {
+    switch (mode) {
+      case ThemeMode.light:
+        return Icons.light_mode_rounded;
+      case ThemeMode.dark:
+        return Icons.dark_mode_rounded;
+      case ThemeMode.system:
+        return Icons.brightness_auto_rounded;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final themeMode = context.watch<ThemeController>().state;
+    return Card(
+      margin: EdgeInsets.zero,
+      child: ListTile(
+        onTap: () => _showThemePicker(context, themeMode),
+        leading: Icon(
+          _icon(themeMode),
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+        title: Text(
+          'Appearance',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+              ),
+        ),
+        subtitle: Text(_label(themeMode)),
+        trailing: const Icon(Icons.chevron_right_rounded),
+      ),
+    );
+  }
+
+  Future<void> _showThemePicker(
+    BuildContext context,
+    ThemeMode currentMode,
+  ) async {
+    final selected = await showModalBottomSheet<ThemeMode>(
+      context: context,
+      showDragHandle: true,
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      builder: (sheetContext) {
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Choose appearance',
+                  style: Theme.of(sheetContext).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Make ShopEase feel right for you.',
+                  style: Theme.of(sheetContext).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(sheetContext)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(0.65),
+                      ),
+                ),
+                const SizedBox(height: 16),
+                ...ThemeMode.values.map(
+                  (mode) => RadioListTile<ThemeMode>(
+                    value: mode,
+                    groupValue: currentMode,
+                    onChanged: (value) => Navigator.pop(sheetContext, value),
+                    secondary: Icon(_icon(mode)),
+                    title: Text(_label(mode)),
+                    contentPadding: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+    if (selected != null) {
+      await context.read<ThemeController>().setThemeMode(selected);
+    }
   }
 }

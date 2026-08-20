@@ -97,10 +97,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           width: 88,
                           height: 88,
                           decoration: BoxDecoration(
-                            gradient: const LinearGradient(
+                            gradient: LinearGradient(
                               colors: [
-                                AppPalette.primary,
-                                AppPalette.secondary,
+                                context.colors.primary,
+                                context.colors.secondary,
                               ],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
@@ -149,8 +149,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           right: 0,
                           child: Container(
                             padding: const EdgeInsets.all(6),
-                            decoration: const BoxDecoration(
-                              color: AppPalette.primary,
+                            decoration: BoxDecoration(
+                              color: context.colors.primary,
                               shape: BoxShape.circle,
                             ),
                             child: const Icon(
@@ -170,16 +170,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       width: double.infinity,
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: AppPalette.destructive.withOpacity(0.1),
+                        color: context.colors.destructive.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color: AppPalette.destructive.withOpacity(0.3),
+                          color: context.colors.destructive.withOpacity(0.3),
                         ),
                       ),
                       child: Text(
                         state.error!,
-                        style: const TextStyle(
-                          color: AppPalette.destructive,
+                        style: TextStyle(
+                          color: context.colors.destructive,
                           fontSize: 13,
                         ),
                       ),

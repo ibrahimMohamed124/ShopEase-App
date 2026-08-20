@@ -86,13 +86,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           width: double.infinity,
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: AppPalette.destructive.withOpacity(0.1),
+                            color: context.colors.destructive.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Text(
                             checkoutState.error!,
-                            style: const TextStyle(
-                                color: AppPalette.destructive),
+                            style: TextStyle(
+                                color: context.colors.destructive),
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -168,10 +168,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         ),
                                         Text(
                                           '×${item.quantity}  \$${(item.product.price * item.quantity).toStringAsFixed(2)}',
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                               fontSize: 13,
                                               color:
-                                                  AppPalette.mutedForeground),
+                                                  context.colors.mutedForeground),
                                         ),
                                       ],
                                     ),
@@ -264,35 +264,35 @@ class _OrderSuccessView extends StatelessWidget {
               Container(
                 width: 96,
                 height: 96,
-                decoration: const BoxDecoration(
-                  color: AppPalette.success,
+                decoration: BoxDecoration(
+                  color: context.colors.success,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(Icons.check_rounded,
                     color: Colors.white, size: 52),
               ),
               const SizedBox(height: 24),
-              const Text(
+              Text(
                 'Order Placed!',
                 style: TextStyle(
-                  color: AppPalette.foreground,
+                  color: context.colors.foreground,
                   fontSize: 26,
                   fontWeight: FontWeight.w800,
                 ),
               ),
               const SizedBox(height: 10),
-              const Text(
+              Text(
                 'Thank you for your purchase.\nYou\'ll receive a confirmation email shortly.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: AppPalette.mutedForeground, height: 1.5),
+                    color: context.colors.mutedForeground, height: 1.5),
               ),
               if (orderId != null) ...[
                 const SizedBox(height: 12),
                 Text(
                   'Order #$orderId',
-                  style: const TextStyle(
-                    color: AppPalette.foreground,
+                  style: TextStyle(
+                    color: context.colors.foreground,
                     fontWeight: FontWeight.w700,
                     fontSize: 13,
                   ),
@@ -323,8 +323,8 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: const TextStyle(
-        color: AppPalette.foreground,
+      style: TextStyle(
+        color: context.colors.foreground,
         fontWeight: FontWeight.w700,
         fontSize: 16,
       ),
@@ -367,7 +367,7 @@ class _Row extends StatelessWidget {
     final style = TextStyle(
       fontWeight: bold ? FontWeight.w700 : FontWeight.w400,
       fontSize: bold ? 15 : 14,
-      color: AppPalette.foreground,
+      color: context.colors.foreground,
     );
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3),
@@ -377,7 +377,7 @@ class _Row extends StatelessWidget {
           Text(label,
               style: bold
                   ? style
-                  : style.copyWith(color: AppPalette.mutedForeground)),
+                  : style.copyWith(color: context.colors.mutedForeground)),
           Text(value, style: style),
         ],
       ),
@@ -449,11 +449,11 @@ class _PaymentTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppPalette.primary.withOpacity(0.08)
-              : AppPalette.muted,
+              ? context.colors.primary.withOpacity(0.08)
+              : context.colors.muted,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? AppPalette.primary : AppPalette.border,
+            color: isSelected ? context.colors.primary : context.colors.border,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -461,22 +461,22 @@ class _PaymentTile extends StatelessWidget {
           children: [
             Icon(icon,
                 color: isSelected
-                    ? AppPalette.primary
-                    : AppPalette.mutedForeground),
+                    ? context.colors.primary
+                    : context.colors.mutedForeground),
             const SizedBox(width: 12),
             Text(
               label,
               style: TextStyle(
                 color: isSelected
-                    ? AppPalette.primary
-                    : AppPalette.foreground,
+                    ? context.colors.primary
+                    : context.colors.foreground,
                 fontWeight: FontWeight.w600,
               ),
             ),
             const Spacer(),
             if (isSelected)
-              const Icon(Icons.check_circle_rounded,
-                  color: AppPalette.primary, size: 20),
+              Icon(Icons.check_circle_rounded,
+                  color: context.colors.primary, size: 20),
           ],
         ),
       ),

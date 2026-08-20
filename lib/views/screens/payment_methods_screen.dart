@@ -24,7 +24,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
             onPressed: () => _showAddCardSheet(context),
             icon: const Icon(Icons.add_rounded, size: 18),
             label: const Text('Add'),
-            style: TextButton.styleFrom(foregroundColor: AppPalette.primary),
+            style: TextButton.styleFrom(foregroundColor: context.colors.primary),
           ),
         ],
       ),
@@ -69,7 +69,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
             icon: Icons.local_shipping_outlined,
             label: 'Cash on Delivery',
             subtitle: 'Pay when your order arrives',
-            color: AppPalette.success,
+            color: context.colors.success,
             onTap: () {},
           ),
           const SizedBox(height: 24),
@@ -135,7 +135,7 @@ class _CardTile extends StatelessWidget {
               decoration: BoxDecoration(
                 color: brandColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: AppPalette.border),
+                border: Border.all(color: context.colors.border),
               ),
               alignment: Alignment.center,
               child: Text(
@@ -153,16 +153,16 @@ class _CardTile extends StatelessWidget {
                 children: [
                   Text(
                     '•••• •••• •••• ${card.lastFour}',
-                    style: const TextStyle(
-                        color: AppPalette.foreground,
+                    style: TextStyle(
+                        color: context.colors.foreground,
                         fontWeight: FontWeight.w600,
                         fontSize: 15),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     'Expires ${card.expiry}',
-                    style: const TextStyle(
-                        color: AppPalette.mutedForeground, fontSize: 12),
+                    style: TextStyle(
+                        color: context.colors.mutedForeground, fontSize: 12),
                   ),
                 ],
               ),
@@ -172,13 +172,13 @@ class _CardTile extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
-                  color: AppPalette.success.withValues(alpha: 0.1),
+                  color: context.colors.success.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Text(
+                child: Text(
                   'Default',
                   style: TextStyle(
-                      color: AppPalette.success,
+                      color: context.colors.success,
                       fontSize: 11,
                       fontWeight: FontWeight.w600),
                 ),
@@ -190,13 +190,13 @@ class _CardTile extends StatelessWidget {
                   if (value == 'default') onSetDefault();
                   if (value == 'delete') onDelete();
                 },
-                itemBuilder: (_) => const [
+                itemBuilder: (_) => [
                   PopupMenuItem(
                       value: 'default', child: Text('Set as default')),
                   PopupMenuItem(
                     value: 'delete',
                     child: Text('Remove',
-                        style: TextStyle(color: AppPalette.destructive)),
+                        style: TextStyle(color: context.colors.destructive)),
                   ),
                 ],
               ),
@@ -229,9 +229,9 @@ class _OtherMethodTile extends StatelessWidget {
       child: Ink(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: AppPalette.card,
+          color: context.colors.card,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppPalette.border),
+          border: Border.all(color: context.colors.border),
         ),
         child: Row(
           children: [
@@ -251,14 +251,14 @@ class _OtherMethodTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(label,
-                      style: const TextStyle(
-                          color: AppPalette.foreground,
+                      style: TextStyle(
+                          color: context.colors.foreground,
                           fontWeight: FontWeight.w600,
                           fontSize: 15)),
                   const SizedBox(height: 2),
                   Text(subtitle,
-                      style: const TextStyle(
-                          color: AppPalette.mutedForeground, fontSize: 12)),
+                      style: TextStyle(
+                          color: context.colors.mutedForeground, fontSize: 12)),
                 ],
               ),
             ),
@@ -307,9 +307,9 @@ class _AddCardSheetState extends State<_AddCardSheet> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Add New Card',
+                Text('Add New Card',
                     style: TextStyle(
-                        color: AppPalette.foreground,
+                        color: context.colors.foreground,
                         fontSize: 18,
                         fontWeight: FontWeight.w700)),
                 IconButton(
@@ -399,8 +399,8 @@ class _SectionHeader extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10),
       child: Text(
         title,
-        style: const TextStyle(
-          color: AppPalette.mutedForeground,
+        style: TextStyle(
+          color: context.colors.mutedForeground,
           fontWeight: FontWeight.w700,
           fontSize: 12,
           letterSpacing: 0.8,

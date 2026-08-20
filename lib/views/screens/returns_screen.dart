@@ -14,10 +14,10 @@ class ReturnsScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: AppPalette.secondary.withValues(alpha: 0.08),
+              color: context.colors.secondary.withValues(alpha: 0.08),
               borderRadius: BorderRadius.circular(14),
               border: Border.all(
-                  color: AppPalette.secondary.withValues(alpha: 0.25)),
+                  color: context.colors.secondary.withValues(alpha: 0.25)),
             ),
             child: Row(
               children: [
@@ -25,28 +25,28 @@ class ReturnsScreen extends StatelessWidget {
                   width: 44,
                   height: 44,
                   decoration: BoxDecoration(
-                    color: AppPalette.secondary.withValues(alpha: 0.15),
+                    color: context.colors.secondary.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   alignment: Alignment.center,
-                  child: const Icon(Icons.verified_user_outlined,
-                      color: AppPalette.secondary, size: 22),
+                  child: Icon(Icons.verified_user_outlined,
+                      color: context.colors.secondary, size: 22),
                 ),
                 const SizedBox(width: 12),
-                const Expanded(
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('30-Day Return Policy',
                           style: TextStyle(
-                              color: AppPalette.foreground,
+                              color: context.colors.foreground,
                               fontWeight: FontWeight.w700,
                               fontSize: 14)),
                       SizedBox(height: 2),
                       Text(
                           'Return most items within 30 days of delivery for a full refund.',
                           style: TextStyle(
-                              color: AppPalette.mutedForeground, fontSize: 12)),
+                              color: context.colors.mutedForeground, fontSize: 12)),
                     ],
                   ),
                 ),
@@ -97,15 +97,15 @@ class ReturnsScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: AppPalette.muted,
+              color: context.colors.muted,
               borderRadius: BorderRadius.circular(14),
             ),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Refund Timeline',
                     style: TextStyle(
-                        color: AppPalette.foreground,
+                        color: context.colors.foreground,
                         fontWeight: FontWeight.w700,
                         fontSize: 14)),
                 SizedBox(height: 8),
@@ -150,9 +150,9 @@ class ReturnsScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Start a Return',
+                Text('Start a Return',
                     style: TextStyle(
-                        color: AppPalette.foreground,
+                        color: context.colors.foreground,
                         fontSize: 18,
                         fontWeight: FontWeight.w700)),
                 IconButton(
@@ -161,9 +161,9 @@ class ReturnsScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            const Text(
+            Text(
                 'Select your delivered order to begin the return process.',
-                style: TextStyle(color: AppPalette.mutedForeground)),
+                style: TextStyle(color: context.colors.mutedForeground)),
             const SizedBox(height: 16),
             _SelectableOrder(
               orderId: '#ORD-7821',
@@ -214,9 +214,9 @@ class _ReturnCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (label, color) = switch (status) {
-      _ReturnStatus.inReview => ('In Review', AppPalette.star),
-      _ReturnStatus.refunded => ('Refunded', AppPalette.success),
-      _ReturnStatus.rejected => ('Rejected', AppPalette.destructive),
+      _ReturnStatus.inReview => ('In Review', context.colors.star),
+      _ReturnStatus.refunded => ('Refunded', context.colors.success),
+      _ReturnStatus.rejected => ('Rejected', context.colors.destructive),
     };
     return Card(
       margin: const EdgeInsets.only(bottom: 4),
@@ -229,8 +229,8 @@ class _ReturnCard extends StatelessWidget {
               children: [
                 Expanded(
                     child: Text(orderId,
-                        style: const TextStyle(
-                            color: AppPalette.mutedForeground, fontSize: 12))),
+                        style: TextStyle(
+                            color: context.colors.mutedForeground, fontSize: 12))),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -248,8 +248,8 @@ class _ReturnCard extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             Text(productName,
-                style: const TextStyle(
-                    color: AppPalette.foreground,
+                style: TextStyle(
+                    color: context.colors.foreground,
                     fontWeight: FontWeight.w600,
                     fontSize: 14)),
             const SizedBox(height: 6),
@@ -257,11 +257,11 @@ class _ReturnCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Requested $requestedDate',
-                    style: const TextStyle(
-                        color: AppPalette.mutedForeground, fontSize: 12)),
+                    style: TextStyle(
+                        color: context.colors.mutedForeground, fontSize: 12)),
                 Text('Refund: \$${refundAmount.toStringAsFixed(2)}',
-                    style: const TextStyle(
-                        color: AppPalette.primary,
+                    style: TextStyle(
+                        color: context.colors.primary,
                         fontWeight: FontWeight.w700,
                         fontSize: 13)),
               ],
@@ -293,9 +293,9 @@ class _ReturnOptionTile extends StatelessWidget {
       child: Ink(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: AppPalette.card,
+          color: context.colors.card,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppPalette.border),
+          border: Border.all(color: context.colors.border),
         ),
         child: Row(
           children: [
@@ -303,11 +303,11 @@ class _ReturnOptionTile extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: AppPalette.primary.withValues(alpha: 0.1),
+                color: context.colors.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               alignment: Alignment.center,
-              child: Icon(icon, color: AppPalette.primary, size: 20),
+              child: Icon(icon, color: context.colors.primary, size: 20),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -315,14 +315,14 @@ class _ReturnOptionTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(title,
-                      style: const TextStyle(
-                          color: AppPalette.foreground,
+                      style: TextStyle(
+                          color: context.colors.foreground,
                           fontWeight: FontWeight.w600,
                           fontSize: 15)),
                   const SizedBox(height: 2),
                   Text(subtitle,
-                      style: const TextStyle(
-                          color: AppPalette.mutedForeground, fontSize: 12)),
+                      style: TextStyle(
+                          color: context.colors.mutedForeground, fontSize: 12)),
                 ],
               ),
             ),
@@ -357,8 +357,8 @@ class _TimelineStep extends StatelessWidget {
               Container(
                 width: 24,
                 height: 24,
-                decoration: const BoxDecoration(
-                    color: AppPalette.primary, shape: BoxShape.circle),
+                decoration: BoxDecoration(
+                    color: context.colors.primary, shape: BoxShape.circle),
                 alignment: Alignment.center,
                 child: Text(step,
                     style: const TextStyle(
@@ -370,7 +370,7 @@ class _TimelineStep extends StatelessWidget {
                 Expanded(
                   child: Container(
                     width: 2,
-                    color: AppPalette.border,
+                    color: context.colors.border,
                     margin: const EdgeInsets.symmetric(vertical: 3),
                   ),
                 ),
@@ -384,14 +384,14 @@ class _TimelineStep extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(label,
-                      style: const TextStyle(
-                          color: AppPalette.foreground,
+                      style: TextStyle(
+                          color: context.colors.foreground,
                           fontWeight: FontWeight.w600,
                           fontSize: 13)),
                   const SizedBox(height: 2),
                   Text(detail,
-                      style: const TextStyle(
-                          color: AppPalette.mutedForeground, fontSize: 12)),
+                      style: TextStyle(
+                          color: context.colors.mutedForeground, fontSize: 12)),
                 ],
               ),
             ),
@@ -422,7 +422,7 @@ class _SelectableOrder extends StatelessWidget {
       child: Ink(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
-          color: AppPalette.muted,
+          color: context.colors.muted,
           borderRadius: BorderRadius.circular(14),
         ),
         child: Row(
@@ -432,17 +432,17 @@ class _SelectableOrder extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(orderId,
-                      style: const TextStyle(
-                          color: AppPalette.foreground,
+                      style: TextStyle(
+                          color: context.colors.foreground,
                           fontWeight: FontWeight.w700)),
                   Text('$date • \$${total.toStringAsFixed(2)}',
-                      style: const TextStyle(
-                          color: AppPalette.mutedForeground, fontSize: 12)),
+                      style: TextStyle(
+                          color: context.colors.mutedForeground, fontSize: 12)),
                 ],
               ),
             ),
-            const Icon(Icons.arrow_forward_ios_rounded,
-                size: 14, color: AppPalette.mutedForeground),
+            Icon(Icons.arrow_forward_ios_rounded,
+                size: 14, color: context.colors.mutedForeground),
           ],
         ),
       ),
@@ -460,8 +460,8 @@ class _SectionHeader extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10),
       child: Text(
         title,
-        style: const TextStyle(
-          color: AppPalette.mutedForeground,
+        style: TextStyle(
+          color: context.colors.mutedForeground,
           fontWeight: FontWeight.w700,
           fontSize: 12,
           letterSpacing: 0.8,

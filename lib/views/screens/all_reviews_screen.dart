@@ -115,12 +115,12 @@ Future<void> _openWriteReview() async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: AppPalette.card,
-        title: const Text('Delete Review',
-            style: TextStyle(color: AppPalette.foreground)),
-        content: const Text(
+        backgroundColor: context.colors.card,
+        title: Text('Delete Review',
+            style: TextStyle(color: context.colors.foreground)),
+        content: Text(
           'Are you sure you want to delete your review? This cannot be undone.',
-          style: TextStyle(color: AppPalette.mutedForeground),
+          style: TextStyle(color: context.colors.mutedForeground),
         ),
         actions: [
           TextButton(
@@ -129,8 +129,8 @@ Future<void> _openWriteReview() async {
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Delete',
-                style: TextStyle(color: AppPalette.destructive)),
+            child: Text('Delete',
+                style: TextStyle(color: context.colors.destructive)),
           ),
         ],
       ),
@@ -177,34 +177,34 @@ Future<void> _openWriteReview() async {
     final filtered = _filtered;
 
     return Scaffold(
-      backgroundColor: AppPalette.background,
+      backgroundColor: context.colors.background,
       appBar: AppBar(
-        backgroundColor: AppPalette.card,
+        backgroundColor: context.colors.card,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_rounded,
-            color: AppPalette.foreground,
+            color: context.colors.foreground,
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: const Text(
+        title: Text(
           'Customer Reviews',
           style: TextStyle(
-            color: AppPalette.foreground,
+            color: context.colors.foreground,
             fontWeight: FontWeight.w700,
             fontSize: 17,
           ),
         ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),
-          child: Container(height: 1, color: AppPalette.border),
+          child: Container(height: 1, color: context.colors.border),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _openWriteReview,
-        backgroundColor: AppPalette.primary,
+        backgroundColor: context.colors.primary,
         foregroundColor: Colors.white,
         icon: const Icon(Icons.edit_outlined, size: 18),
         label: const Text(
@@ -217,15 +217,15 @@ Future<void> _openWriteReview() async {
           // ── Summary card ────────────────────────────────────────────
           SliverToBoxAdapter(
             child: Container(
-              color: AppPalette.card,
+              color: context.colors.card,
               padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     args.productName,
-                    style: const TextStyle(
-                      color: AppPalette.mutedForeground,
+                    style: TextStyle(
+                      color: context.colors.mutedForeground,
                       fontSize: 13,
                     ),
                     maxLines: 1,
@@ -240,8 +240,8 @@ Future<void> _openWriteReview() async {
                         children: [
                           Text(
                             args.rating.toStringAsFixed(1),
-                            style: const TextStyle(
-                              color: AppPalette.foreground,
+                            style: TextStyle(
+                              color: context.colors.foreground,
                               fontWeight: FontWeight.w800,
                               fontSize: 52,
                               height: 1,
@@ -252,8 +252,8 @@ Future<void> _openWriteReview() async {
                           const SizedBox(height: 4),
                           Text(
                             '${args.reviewCount} reviews',
-                            style: const TextStyle(
-                              color: AppPalette.mutedForeground,
+                            style: TextStyle(
+                              color: context.colors.mutedForeground,
                               fontSize: 12,
                             ),
                           ),
@@ -282,7 +282,7 @@ Future<void> _openWriteReview() async {
           // ── Filters row ─────────────────────────────────────────────
           SliverToBoxAdapter(
             child: Container(
-              color: AppPalette.background,
+              color: context.colors.background,
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -317,10 +317,10 @@ Future<void> _openWriteReview() async {
                   // Sort dropdown
                   Row(
                     children: [
-                      const Text(
+                      Text(
                         'Sort by:',
                         style: TextStyle(
-                          color: AppPalette.mutedForeground,
+                          color: context.colors.mutedForeground,
                           fontSize: 13,
                         ),
                       ),
@@ -329,12 +329,12 @@ Future<void> _openWriteReview() async {
                         child: DropdownButton<String>(
                           value: _sortBy,
                           isDense: true,
-                          style: const TextStyle(
-                            color: AppPalette.foreground,
+                          style: TextStyle(
+                            color: context.colors.foreground,
                             fontWeight: FontWeight.w600,
                             fontSize: 13,
                           ),
-                          dropdownColor: AppPalette.card,
+                          dropdownColor: context.colors.card,
                           items: const [
                             DropdownMenuItem(
                               value: 'recent',
@@ -361,8 +361,8 @@ Future<void> _openWriteReview() async {
                       const Spacer(),
                       Text(
                         '${filtered.length} result${filtered.length == 1 ? '' : 's'}',
-                        style: const TextStyle(
-                          color: AppPalette.mutedForeground,
+                        style: TextStyle(
+                          color: context.colors.mutedForeground,
                           fontSize: 12,
                         ),
                       ),
@@ -384,13 +384,13 @@ Future<void> _openWriteReview() async {
                     Icon(
                       Icons.rate_review_outlined,
                       size: 48,
-                      color: AppPalette.mutedForeground,
+                      color: context.colors.mutedForeground,
                     ),
                     const SizedBox(height: 12),
-                    const Text(
+                    Text(
                       'No reviews match this filter',
                       style: TextStyle(
-                        color: AppPalette.mutedForeground,
+                        color: context.colors.mutedForeground,
                         fontSize: 14,
                       ),
                     ),
@@ -442,7 +442,7 @@ class _StarRow extends StatelessWidget {
               : half
               ? Icons.star_half_rounded
               : Icons.star_outline_rounded,
-          color: AppPalette.star,
+          color: context.colors.star,
           size: size,
         );
       }),
@@ -471,21 +471,21 @@ class _RatingBar extends StatelessWidget {
         children: [
           Text(
             '$star',
-            style: const TextStyle(
-              color: AppPalette.mutedForeground,
+            style: TextStyle(
+              color: context.colors.mutedForeground,
               fontSize: 11,
             ),
           ),
           const SizedBox(width: 3),
-          const Icon(Icons.star_rounded, color: AppPalette.star, size: 11),
+          Icon(Icons.star_rounded, color: context.colors.star, size: 11),
           const SizedBox(width: 6),
           Expanded(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(4),
               child: LinearProgressIndicator(
                 value: fraction,
-                backgroundColor: AppPalette.muted,
-                color: AppPalette.star,
+                backgroundColor: context.colors.muted,
+                color: context.colors.star,
                 minHeight: 7,
               ),
             ),
@@ -496,8 +496,8 @@ class _RatingBar extends StatelessWidget {
             child: Text(
               '${(fraction * count).round()}',
               textAlign: TextAlign.end,
-              style: const TextStyle(
-                color: AppPalette.mutedForeground,
+              style: TextStyle(
+                color: context.colors.mutedForeground,
                 fontSize: 10,
               ),
             ),
@@ -529,16 +529,16 @@ class _FilterChip extends StatelessWidget {
         duration: const Duration(milliseconds: 160),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
         decoration: BoxDecoration(
-          color: selected ? AppPalette.primary : AppPalette.card,
+          color: selected ? context.colors.primary : context.colors.card,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: selected ? AppPalette.primary : AppPalette.border,
+            color: selected ? context.colors.primary : context.colors.border,
           ),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: selected ? Colors.white : AppPalette.foreground,
+            color: selected ? Colors.white : context.colors.foreground,
             fontWeight: FontWeight.w600,
             fontSize: 12,
           ),
@@ -580,9 +580,9 @@ class _ReviewCardState extends State<_ReviewCard> {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppPalette.card,
+        color: context.colors.card,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppPalette.border),
+        border: Border.all(color: context.colors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -593,11 +593,11 @@ class _ReviewCardState extends State<_ReviewCard> {
             children: [
               CircleAvatar(
                 radius: 17,
-                backgroundColor: AppPalette.secondary.withValues(alpha: 0.15),
+                backgroundColor: context.colors.secondary.withValues(alpha: 0.15),
                 child: Text(
                   review.name[0],
-                  style: const TextStyle(
-                    color: AppPalette.secondary,
+                  style: TextStyle(
+                    color: context.colors.secondary,
                     fontWeight: FontWeight.w700,
                     fontSize: 14,
                   ),
@@ -612,24 +612,24 @@ class _ReviewCardState extends State<_ReviewCard> {
                       children: [
                         Text(
                           review.name,
-                          style: const TextStyle(
-                            color: AppPalette.foreground,
+                          style: TextStyle(
+                            color: context.colors.foreground,
                             fontWeight: FontWeight.w600,
                             fontSize: 13,
                           ),
                         ),
                         if (review.verified) ...[
                           const SizedBox(width: 6),
-                          const Icon(
+                          Icon(
                             Icons.verified_rounded,
-                            color: AppPalette.success,
+                            color: context.colors.success,
                             size: 13,
                           ),
                           const SizedBox(width: 2),
-                          const Text(
+                          Text(
                             'Verified',
                             style: TextStyle(
-                              color: AppPalette.success,
+                              color: context.colors.success,
                               fontSize: 10,
                               fontWeight: FontWeight.w500,
                             ),
@@ -644,8 +644,8 @@ class _ReviewCardState extends State<_ReviewCard> {
                         const SizedBox(width: 6),
                         Text(
                           review.date,
-                          style: const TextStyle(
-                            color: AppPalette.mutedForeground,
+                          style: TextStyle(
+                            color: context.colors.mutedForeground,
                             fontSize: 11,
                           ),
                         ),
@@ -659,24 +659,24 @@ class _ReviewCardState extends State<_ReviewCard> {
                 InkWell(
                   onTap: widget.onEdit,
                   borderRadius: BorderRadius.circular(8),
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.all(6),
                     child: Icon(
                       Icons.edit_outlined,
                       size: 17,
-                      color: AppPalette.mutedForeground,
+                      color: context.colors.mutedForeground,
                     ),
                   ),
                 ),
                 InkWell(
                   onTap: widget.onDelete,
                   borderRadius: BorderRadius.circular(8),
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.all(6),
                     child: Icon(
                       Icons.delete_outline_rounded,
                       size: 17,
-                      color: AppPalette.destructive,
+                      color: context.colors.destructive,
                     ),
                   ),
                 ),
@@ -688,8 +688,8 @@ class _ReviewCardState extends State<_ReviewCard> {
           const SizedBox(height: 10),
           Text(
             review.text,
-            style: const TextStyle(
-              color: AppPalette.mutedForeground,
+            style: TextStyle(
+              color: context.colors.mutedForeground,
               fontSize: 13,
               height: 1.6,
             ),
@@ -699,10 +699,10 @@ class _ReviewCardState extends State<_ReviewCard> {
           const SizedBox(height: 10),
           Row(
             children: [
-              const Text(
+              Text(
                 'Helpful?',
                 style: TextStyle(
-                  color: AppPalette.mutedForeground,
+                  color: context.colors.mutedForeground,
                   fontSize: 12,
                 ),
               ),
@@ -719,13 +719,13 @@ class _ReviewCardState extends State<_ReviewCard> {
                   ),
                   decoration: BoxDecoration(
                     color: _markedHelpful
-                        ? AppPalette.success.withValues(alpha: 0.1)
-                        : AppPalette.muted,
+                        ? context.colors.success.withValues(alpha: 0.1)
+                        : context.colors.muted,
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       color: _markedHelpful
-                          ? AppPalette.success.withValues(alpha: 0.4)
-                          : AppPalette.border,
+                          ? context.colors.success.withValues(alpha: 0.4)
+                          : context.colors.border,
                     ),
                   ),
                   child: Row(
@@ -735,16 +735,16 @@ class _ReviewCardState extends State<_ReviewCard> {
                         Icons.thumb_up_outlined,
                         size: 12,
                         color: _markedHelpful
-                            ? AppPalette.success
-                            : AppPalette.mutedForeground,
+                            ? context.colors.success
+                            : context.colors.mutedForeground,
                       ),
                       const SizedBox(width: 4),
                       Text(
                         'Yes${helpfulTotal > 0 ? ' ($helpfulTotal)' : ''}',
                         style: TextStyle(
                           color: _markedHelpful
-                              ? AppPalette.success
-                              : AppPalette.mutedForeground,
+                              ? context.colors.success
+                              : context.colors.mutedForeground,
                           fontSize: 11,
                           fontWeight: FontWeight.w500,
                         ),

@@ -126,8 +126,8 @@ class _WriteReviewSheetState extends State<WriteReviewSheet> {
     final bottom = MediaQuery.of(context).viewInsets.bottom;
 
     return Container(
-      decoration: const BoxDecoration(
-        color: AppPalette.background,
+      decoration: BoxDecoration(
+        color: context.colors.background,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       padding: EdgeInsets.fromLTRB(20, 0, 20, 24 + bottom),
@@ -142,7 +142,7 @@ class _WriteReviewSheetState extends State<WriteReviewSheet> {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: AppPalette.border,
+                color: context.colors.border,
                 borderRadius: BorderRadius.circular(4),
               ),
             ),
@@ -155,13 +155,13 @@ class _WriteReviewSheetState extends State<WriteReviewSheet> {
                 width: 38,
                 height: 38,
                 decoration: BoxDecoration(
-                  color: AppPalette.primary.withOpacity(0.10),
+                  color: context.colors.primary.withOpacity(0.10),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 alignment: Alignment.center,
-                child: const Icon(
+                child: Icon(
                   Icons.rate_review_rounded,
-                  color: AppPalette.primary,
+                  color: context.colors.primary,
                   size: 20,
                 ),
               ),
@@ -172,16 +172,16 @@ class _WriteReviewSheetState extends State<WriteReviewSheet> {
                   children: [
                     Text(
                       widget.isEditing ? 'Edit Review' : 'Write a Review',
-                      style: const TextStyle(
-                        color: AppPalette.foreground,
+                      style: TextStyle(
+                        color: context.colors.foreground,
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const Text(
+                    Text(
                       'Share your experience with others',
                       style: TextStyle(
-                        color: AppPalette.mutedForeground,
+                        color: context.colors.mutedForeground,
                         fontSize: 12,
                       ),
                     ),
@@ -193,10 +193,10 @@ class _WriteReviewSheetState extends State<WriteReviewSheet> {
           const SizedBox(height: 24),
 
           // ── Star selector ─────────────────────────────────────────
-          const Text(
+          Text(
             'Your Rating',
             style: TextStyle(
-              color: AppPalette.foreground,
+              color: context.colors.foreground,
               fontWeight: FontWeight.w600,
               fontSize: 13,
             ),
@@ -223,7 +223,7 @@ class _WriteReviewSheetState extends State<WriteReviewSheet> {
                     duration: const Duration(milliseconds: 150),
                     child: Icon(
                       filled ? Icons.star_rounded : Icons.star_outline_rounded,
-                      color: filled ? AppPalette.star : AppPalette.border,
+                      color: filled ? context.colors.star : context.colors.border,
                       size: 38,
                     ),
                   ),
@@ -240,8 +240,8 @@ class _WriteReviewSheetState extends State<WriteReviewSheet> {
                     padding: const EdgeInsets.only(top: 6),
                     child: Text(
                       _labelFor(_rating),
-                      style: const TextStyle(
-                        color: AppPalette.star,
+                      style: TextStyle(
+                        color: context.colors.star,
                         fontWeight: FontWeight.w600,
                         fontSize: 13,
                       ),
@@ -253,8 +253,8 @@ class _WriteReviewSheetState extends State<WriteReviewSheet> {
                         padding: const EdgeInsets.only(top: 6),
                         child: Text(
                           _ratingError!,
-                          style: const TextStyle(
-                            color: AppPalette.destructive,
+                          style: TextStyle(
+                            color: context.colors.destructive,
                             fontSize: 12,
                           ),
                         ),
@@ -264,10 +264,10 @@ class _WriteReviewSheetState extends State<WriteReviewSheet> {
           const SizedBox(height: 18),
 
           // ── Review text ───────────────────────────────────────────
-          const Text(
+          Text(
             'Your Review',
             style: TextStyle(
-              color: AppPalette.foreground,
+              color: context.colors.foreground,
               fontWeight: FontWeight.w600,
               fontSize: 13,
             ),
@@ -285,13 +285,13 @@ class _WriteReviewSheetState extends State<WriteReviewSheet> {
             decoration: InputDecoration(
               hintText:
                   'What did you like or dislike? How was the quality?',
-              hintStyle: const TextStyle(
-                color: AppPalette.mutedForeground,
+              hintStyle: TextStyle(
+                color: context.colors.mutedForeground,
                 fontSize: 13,
               ),
               errorText: _textError,
-              counterStyle: const TextStyle(
-                color: AppPalette.mutedForeground,
+              counterStyle: TextStyle(
+                color: context.colors.mutedForeground,
                 fontSize: 11,
               ),
             ),
@@ -306,16 +306,16 @@ class _WriteReviewSheetState extends State<WriteReviewSheet> {
               width: double.infinity,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppPalette.destructive.withOpacity(0.1),
+                color: context.colors.destructive.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
-                  color: AppPalette.destructive.withOpacity(0.3),
+                  color: context.colors.destructive.withOpacity(0.3),
                 ),
               ),
               child: Text(
                 _submitError!,
-                style: const TextStyle(
-                  color: AppPalette.destructive,
+                style: TextStyle(
+                  color: context.colors.destructive,
                   fontSize: 13,
                 ),
               ),

@@ -127,16 +127,16 @@ class _ShippingAddressFormState extends State<_ShippingAddressForm> {
                       decoration: BoxDecoration(
                         // [تعديل] — نفس ألوان الـerror banner المستخدمة في
                         // edit_profile_screen.dart بدل Colors.red hardcoded
-                        color: AppPalette.destructive.withOpacity(0.1),
+                        color: context.colors.destructive.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color: AppPalette.destructive.withOpacity(0.3),
+                          color: context.colors.destructive.withOpacity(0.3),
                         ),
                       ),
                       child: Text(
                         state.error!,
-                        style: const TextStyle(
-                          color: AppPalette.destructive,
+                        style: TextStyle(
+                          color: context.colors.destructive,
                           fontSize: 13,
                         ),
                       ),

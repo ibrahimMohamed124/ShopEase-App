@@ -88,8 +88,8 @@ class _SearchScreenState extends State<SearchScreen> {
                               width: 16,
                               height: 16,
                               alignment: Alignment.center,
-                              decoration: const BoxDecoration(
-                                color: AppPalette.primary,
+                              decoration: BoxDecoration(
+                                color: context.colors.primary,
                                 shape: BoxShape.circle,
                               ),
                               child: Text(
@@ -137,10 +137,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      const Icon(
+                                      Icon(
                                         Icons.search_off_rounded,
                                         size: 64,
-                                        color: AppPalette.mutedForeground,
+                                        color: context.colors.mutedForeground,
                                       ),
                                       const SizedBox(height: 12),
                                       Text(
@@ -148,8 +148,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                             ? 'Start typing to search'
                                             : 'No results for "${searchState.query}"',
                                         textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          color: AppPalette.mutedForeground,
+                                        style: TextStyle(
+                                          color: context.colors.mutedForeground,
                                           fontSize: 16,
                                         ),
                                       ),
@@ -300,7 +300,7 @@ class _FilterDropdown<T> extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: AppPalette.muted,
+        color: context.colors.muted,
         borderRadius: BorderRadius.circular(20),
       ),
       child: DropdownButtonHideUnderline(
