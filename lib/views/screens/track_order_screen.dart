@@ -57,9 +57,11 @@ class _TrackOrderView extends StatelessWidget {
           }
 
           return RefreshIndicator(
+            color: context.colors.primary,
             onRefresh: () =>
                 context.read<TrackOrderCubit>().loadTracking(orderId),
             child: ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
               children: [
                 // ── Summary card ────────────────────────────────────

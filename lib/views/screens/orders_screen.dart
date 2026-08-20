@@ -36,6 +36,7 @@ class _OrdersView extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(title: const Text('My Orders')),
           body: RefreshIndicator(
+            color: context.colors.primary,
             onRefresh: () => context.read<OrdersCubit>().loadOrders(),
             child: _buildBody(context, state),
           ),
@@ -51,6 +52,7 @@ class _OrdersView extends StatelessWidget {
 
     if (state.error != null && state.orders.isEmpty) {
       return ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
         padding: const EdgeInsets.all(24),
         children: [
           const SizedBox(height: 80),
@@ -75,6 +77,7 @@ class _OrdersView extends StatelessWidget {
 
     if (state.isEmpty) {
       return ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
         padding: const EdgeInsets.all(24),
         children: [
           SizedBox(height: 80),
@@ -101,6 +104,7 @@ class _OrdersView extends StatelessWidget {
     }
 
     return ListView.separated(
+      physics: const AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 28),
       itemCount: state.orders.length,
       separatorBuilder: (_, __) => const SizedBox(height: 12),
